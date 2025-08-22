@@ -12,7 +12,7 @@ const App = () => {
   const isSellerPath = useLocation().pathname.includes("seller");
   return (
     <div>
-      <Navbar />
+      {isSellerPath?null:<Navbar />}
       <div>
         <Routes>
         <Route path="/" element = {<Home/>}/>
