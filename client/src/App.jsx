@@ -4,8 +4,11 @@ import Product from "./Pages/Product";
 import ProductDetails from "./Pages/ProductDetails";
 import Cart from "./Pages/Cart";
 import Navbar from "./components/Navbar";
+import { useContext } from "react";
+import { AppContext } from "./context/AppContext";
 
 const App = () => {
+  const {isSeller}=useContext(AppContext);
   return (
     <div>
       <Navbar />
