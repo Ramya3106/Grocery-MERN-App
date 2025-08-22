@@ -1,4 +1,4 @@
-import { Routes,Route } from "react-router-dom";
+import { Routes,Route, useLocation } from "react-router-dom";
 import Home from "./Pages/Home";
 import Product from "./Pages/Product";
 import ProductDetails from "./Pages/ProductDetails";
@@ -9,6 +9,7 @@ import { AppContext } from "./context/AppContext";
 
 const App = () => {
   const {isSeller}=useContext(AppContext);
+  const isSellerPath = useLocation().pathname.includes("seller");
   return (
     <div>
       <Navbar />
