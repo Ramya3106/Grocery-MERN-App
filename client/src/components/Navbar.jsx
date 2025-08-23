@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-
+import { assets } from "../assets/assets";
 const Navbar = () => {
     const [open, setOpen] = useState(false)
     const  {user,setUser}=useContext(AppContext);
@@ -32,7 +32,7 @@ const Navbar = () => {
                 {user?(
                    <>
                    <div className="relative group">
-                    <img src={assets.png} alt=""/>
+                    <img src={assets.profile_icon} alt=""/>
                     </div>
                     </>
                 ):(
