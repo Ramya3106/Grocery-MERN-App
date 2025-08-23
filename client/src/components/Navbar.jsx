@@ -32,7 +32,7 @@ const Navbar = () => {
                 {user?(
                    <>
                    <div className="relative group">
-                    <img src={} alt=""/>
+                    <img src={assets.png} alt=""/>
                     </div>
                     </>
                 ):(
