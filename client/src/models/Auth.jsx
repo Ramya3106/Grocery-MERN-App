@@ -9,31 +9,7 @@ const Auth = () => {
     const { setShowUserLogin, setuser } = useContext(AppContext);
 
     const submitHandler = async (e) => {
-        e.preventDefault();
-
-        if (state === "login") {
-            // Login logic
-            if (email && password) {
-                console.log("Logging in with:", email, password);
-                // For now, we'll simulate a successful login
-                // In a real app, you would make an API call here
-                setuser({ email: email, name: email.split('@')[0] });
-                setShowUserLogin(false);
-            } else {
-                alert("Please fill in all fields");
-            }
-        } else {
-            // Register logic
-            if (name && email && password) {
-                console.log("Registering with:", name, email, password);
-                // For now, we'll simulate a successful registration
-                // In a real app, you would make an API call here
-                setuser({ email: email, name: name });
-                setShowUserLogin(false);
-            } else {
-                alert("Please fill in all fields");
-            }
-        }
+        e.preventDefault();   
     };
 
     return (
@@ -69,7 +45,10 @@ const Auth = () => {
                 </p>
             )}
             <button
-            type="submit"
+            onClick={() => {
+                setuser(true);
+                setShowUserLogin(false);
+            }}
             className="bg-indigo-500 hover:bg-indigo-600 transition-all text-white w-full py-2 rounded-md cursor-pointer">
                 {state === "register" ? "Create Account" : "Login"}
             </button>
