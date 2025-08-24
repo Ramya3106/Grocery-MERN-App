@@ -37,7 +37,7 @@ const Navbar = () => {
                     <img src={assets.profile_icon} alt="" className="w-10"/>
                     <ul className="hidden group-hover:block absolute top-10 right-0 bg-white shadow-md rounded-md borer border-gray-200 py-2 w-30 z-40 text-sm">
                         <li className="p-1.5 cursor-pointer">My Orders</li>
-                        <li className="p-1.5 curdor-pointer">Logout</li>
+                        <li className="p-1.5 cursor-pointer">Logout</li>
                     </ul>
                     </div>
                     </>
