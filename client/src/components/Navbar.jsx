@@ -35,7 +35,7 @@ const Navbar = () => {
                    <>
                    <div className="relative group">
                     <img src={assets.profile_icon} alt="" className="w-10"/>
-                    <ul>
+                    <ul className="hidden group-hover:block absolute top-10 right-0 bg-white shadow-md rounded-md">
                         <li>My Orders</li>
                         <li>Logout</li>
                     </ul>
