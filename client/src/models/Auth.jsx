@@ -12,7 +12,7 @@ const Auth = () => {
     };
 
     return (
-        <div>
+        <div className="fixed top-0 bottom-0 left-0 right-0 z-40 flex items-center justify-center bg-black/50 text-gray-600">
             <form onSubmit={submitHandler}
             className="flex flex-col gap-4 m-auto items-start p-8 py-12 w-80 sm:w-[352px] text-gray-500 rounded-lg shadow-xl border border-gray-200 bg-white">
             <p className="text-2xl font-medium m-auto">
