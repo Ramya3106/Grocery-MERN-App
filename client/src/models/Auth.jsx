@@ -1,4 +1,4 @@
-const App = () => {
+const Auth = () => {
     const [state, setState] = React.useState("login");
     const [name, setName] = React.useState("");
     const [email, setEmail] = React.useState("");
