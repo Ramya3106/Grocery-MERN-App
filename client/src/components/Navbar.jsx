@@ -35,6 +35,10 @@ const Navbar = () => {
                    <>
                    <div className="relative group">
                     <img src={assets.profile_icon} alt="" className="w-10"/>
+                    <ul>
+                        <li>My Orders</li>
+                        <li>Logout</li>
+                    </ul>
                     </div>
                     </>
                 ):(
