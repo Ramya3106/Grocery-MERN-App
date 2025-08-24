@@ -1,3 +1,4 @@
+import { assets } from "../assets/assets";
 const Hero = () => {
   return (
     <div className="relative">
@@ -6,4 +7,4 @@ const Hero = () => {
   )
 }
 
-export default Hero
+export default Hero;
