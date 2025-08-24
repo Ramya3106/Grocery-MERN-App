@@ -6,9 +6,15 @@ const Auth = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const submitHandler = async (e) => {
+        e.preventDefault();
+        console.log("name", name, "email", email, "password", password);
+    };
+
     return (
         <div>
-            <form className="flex flex-col gap-4 m-auto items-start p-8 py-12 w-80 sm:w-[352px] text-gray-500 rounded-lg shadow-xl border border-gray-200 bg-white">
+            <form onSubmit={submitHandler}
+            className="flex flex-col gap-4 m-auto items-start p-8 py-12 w-80 sm:w-[352px] text-gray-500 rounded-lg shadow-xl border border-gray-200 bg-white">
             <p className="text-2xl font-medium m-auto">
                 <span className="text-indigo-500">User</span> {state === "login" ? "Login" : "Sign Up"}
             </p>
