@@ -9,11 +9,14 @@ import { AppContext } from "./context/AppContext";
 import MyOrders from "./Pages/MyOrders";
 
 const App = () => {
-  const {isSeller}=useContext(AppContext);
+  const {isSeller, showUserLogin}=useContext(AppContext);
   const isSellerPath = useLocation().pathname.includes("seller");
   return (
     <div>
       {isSellerPath?null:<Navbar />}
+      {
+        showUserLogin?<Auth/> :null
+      }
       <div>
         <Routes>
         <Route path="/" element = {<Home/>}/>
