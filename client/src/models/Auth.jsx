@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const Auth = () => {
     const [state, setState] = useState("login");
     const [name, setName] = useState("");
