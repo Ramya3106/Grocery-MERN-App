@@ -6,6 +6,7 @@ import Cart from "./Pages/Cart";
 import Navbar from "./components/Navbar";
 import { useContext } from "react";
 import { AppContext } from "./context/AppContext";
+import MyOrders from "./Pages/MyOrders";
 
 const App = () => {
   const {isSeller}=useContext(AppContext);
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/products" element = {<Product/>}/>
         <Route path="/products/:id" element = {<ProductDetails/>}/>
         <Route path="/Cart" element = {<Cart/>}/>
+        <Route path="my-orders" element={<MyOrders/>}/>
       </Routes>
       </div>
     </div>
