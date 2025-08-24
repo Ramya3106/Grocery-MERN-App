@@ -13,7 +13,7 @@ const App = () => {
   const {isSeller, showUserLogin}=useContext(AppContext);
   const isSellerPath = useLocation().pathname.includes("seller");
   return (
-    <div>
+    <div className="text-default min-h-screen">
       {isSellerPath?null:<Navbar />}
       {
         showUserLogin?<Auth/> :null
