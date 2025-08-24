@@ -6,7 +6,7 @@ const Auth = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const { setShowUserLogin } = useContext(AppContext);
+    const { setShowUserLogin, setUser } = useContext(AppContext);
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -45,7 +45,10 @@ const Auth = () => {
                     Create an account? <span onClick={() => setState("register")} className="text-indigo-500 cursor-pointer">click here</span>
                 </p>
             )}
-            <button className="bg-indigo-500 hover:bg-indigo-600 transition-all text-white w-full py-2 rounded-md cursor-pointer">
+            <button onClick={() => {
+                setUser(true);
+            }}
+            className="bg-indigo-500 hover:bg-indigo-600 transition-all text-white w-full py-2 rounded-md cursor-pointer">
                 {state === "register" ? "Create Account" : "Login"}
             </button>
         </form>
