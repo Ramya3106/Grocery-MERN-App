@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import { useContext } from "react";
 import { AppContext } from "./context/AppContext";
 import MyOrders from "./Pages/MyOrders";
+import Auth from "./models/Auth";
 
 const App = () => {
   const {isSeller, showUserLogin}=useContext(AppContext);
