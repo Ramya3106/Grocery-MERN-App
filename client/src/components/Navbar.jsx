@@ -40,7 +40,8 @@ const Navbar = () => {
                             navigate("/my-orders");
                         }}
                         className="p-1.5 cursor-pointer">My Orders</li>
-                        <li className="p-1.5 cursor-pointer">Logout</li>
+                        <li onClick={() => setuser(null)}
+                        className="p-1.5 cursor-pointer">Logout</li>
                     </ul>
                     </div>
                     </>
@@ -66,9 +67,25 @@ const Navbar = () => {
             <div className={`${open ? 'flex' : 'hidden'} absolute top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden`}>
                 <Link to={"/"}>Home</Link>
                 <Link to={"/products"}>All Products</Link>
-                <button className="cursor-pointer px-6 py-2 mt-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full text-sm">
+                {user?(
+                   <>
+                   <div className="relative group">
+                    <img src={assets.profile_icon} alt="" className="w-10"/>
+                    <ul className="hidden group-hover:block absolute top-10 right-0 bg-white shadow-md rounded-md borer border-gray-200 py-2 w-30 z-40 text-sm">
+                        <li onClick={() => {
+                            navigate("/my-orders");
+                        }}
+                        className="p-1.5 cursor-pointer">My Orders</li>
+                        <li onClick={() => setuser(null)}
+                        className="p-1.5 cursor-pointer">Logout</li>
+                    </ul>
+                    </div>
+                    </>
+                ):(
+                  <button className="cursor-pointer px-8 py-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full">
                     Login
                 </button>
+                )}
             </div>
 
         </nav>
