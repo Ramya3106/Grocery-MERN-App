@@ -6,11 +6,34 @@ const Auth = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const { setShowUserLogin, setUser } = useContext(AppContext);
+    const { setShowUserLogin, setuser } = useContext(AppContext);
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        console.log("name", name, "email", email, "password", password);
+
+        if (state === "login") {
+            // Login logic
+            if (email && password) {
+                console.log("Logging in with:", email, password);
+                // For now, we'll simulate a successful login
+                // In a real app, you would make an API call here
+                setuser({ email: email, name: email.split('@')[0] });
+                setShowUserLogin(false);
+            } else {
+                alert("Please fill in all fields");
+            }
+        } else {
+            // Register logic
+            if (name && email && password) {
+                console.log("Registering with:", name, email, password);
+                // For now, we'll simulate a successful registration
+                // In a real app, you would make an API call here
+                setuser({ email: email, name: name });
+                setShowUserLogin(false);
+            } else {
+                alert("Please fill in all fields");
+            }
+        }
     };
 
     return (
@@ -45,10 +68,8 @@ const Auth = () => {
                     Create an account? <span onClick={() => setState("register")} className="text-indigo-500 cursor-pointer">click here</span>
                 </p>
             )}
-            <button onClick={() => {
-                setUser(true);
-                setShowUserLogin(false);
-            }}
+            <button
+            type="submit"
             className="bg-indigo-500 hover:bg-indigo-600 transition-all text-white w-full py-2 rounded-md cursor-pointer">
                 {state === "register" ? "Create Account" : "Login"}
             </button>
