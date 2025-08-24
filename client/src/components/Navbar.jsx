@@ -34,7 +34,7 @@ const Navbar = () => {
                 {user?(
                    <>
                    <div className="relative group">
-                    <img src={assets.profile_icon} alt=""/>
+                    <img src={assets.profile_icon} alt="" className="w-10"/>
                     </div>
                     </>
                 ):(
