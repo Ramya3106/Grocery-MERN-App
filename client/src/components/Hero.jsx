@@ -3,6 +3,7 @@ const Hero = () => {
   return (
     <div className="relative">
         <img src={assets.main_banner_bg} alt="" className="hidden md:block w-full" />
+        <img src={assets.main_banner_bg_sm} alt="" className="hidden md:block w-full" />
     </div>
   )
 }
