@@ -14,7 +14,7 @@ const Hero = () => {
             <img src={assets.white_arrow_icon} alt="" className="md:hidden transition group-focus:translate-x-1"/>
             </Link>
           </div>
-
+             
         </div>
     </div>
   )
