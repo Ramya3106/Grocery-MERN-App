@@ -4,7 +4,9 @@ const Category = () => {
         <p className="text-2xl font-medium md:text-3xl">Category</p>
         <div>
             {
-                
+                Category.map((category,index)=>(
+                    <div></div>
+                ))
             }
         </div>
     </div>
