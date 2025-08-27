@@ -11,7 +11,7 @@ const Hero = () => {
           </h1>
           <div className="flex items-center mt-6 font-medium gap-6">
             <Link to="/products" className="flex group items-center gap-2 px-7 rounded text-white py-3 bg-primary cursor-pointer">Shop Now
-            <img />
+            <img src={assets.white_arrow_icon} alt="" className="md:hidden"/>
             </Link>
           </div>
 
