@@ -1,7 +1,7 @@
 const Category = () => {
   return (
     <div className="mt-16">
-        <p>Category</p>
+        <p className="text-2xl font-medium md:text-3xl">Category</p>
     </div>
   )
 }
