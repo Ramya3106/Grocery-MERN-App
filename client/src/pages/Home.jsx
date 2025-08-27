@@ -2,7 +2,7 @@ import Hero from '../components/Hero'
 
 const Home = () => {
   return (
-    <div>
+    <div className='mt-10'>
       <Hero/>
     </div>
   )
