@@ -8,6 +8,9 @@ const Hero = () => {
           <h1 className="text-3xl md:text-4xl font-bold text-center md:text-left max-w-72 md:max-w-80 leading-tight lg:leading-15">
             Freshers You Can Trust, Savings You Will Love!
           </h1>
+          <div className="flex items-center mt-6 font-medium gap-6">
+
+          </div>
 
         </div>
     </div>
