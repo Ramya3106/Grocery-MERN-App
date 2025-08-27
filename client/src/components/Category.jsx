@@ -4,7 +4,7 @@ const Category = () => {
   return (
     <div className="mt-16">
         <p className="text-2xl font-medium md:text-3xl">Category</p>
-        <div className="my-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 items-center justify-center">
+        <div className="my-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 items-center justify-center">
             {
                 categories.map((category,index)=>(
                     <div key={index} className={`group cursor-pointer py-5 px-3 rounded-lg gap-2 flex flex-col items-center justify-center`}>
