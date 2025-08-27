@@ -9,7 +9,7 @@ const Hero = () => {
             Freshers You Can Trust, Savings You Will Love!
           </h1>
           <div className="flex items-center mt-6 font-medium gap-6">
-
+            <link></link>
           </div>
 
         </div>
