@@ -10,7 +10,9 @@ const Hero = () => {
             Freshers You Can Trust, Savings You Will Love!
           </h1>
           <div className="flex items-center mt-6 font-medium gap-6">
-            <Link to="/products" className="flex group items-center gap-2 px-7 rounded text-white py-3 bg-primary cursor-pointer">Shop Now</Link>
+            <Link to="/products" className="flex group items-center gap-2 px-7 rounded text-white py-3 bg-primary cursor-pointer">Shop Now
+            <img />
+            </Link>
           </div>
 
         </div>
