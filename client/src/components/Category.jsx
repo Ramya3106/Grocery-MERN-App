@@ -5,7 +5,7 @@ const Category = () => {
         <div>
             {
                 Category.map((category,index)=>(
-                    <div key={index} className={`group cursor-pointer`}></div>
+                    <div key={index} className={`group cursor-pointer py-5 px-3 rounded-lg gap-2 flex flex-col items-center justify-center`}></div>
                 ))
             }
         </div>
