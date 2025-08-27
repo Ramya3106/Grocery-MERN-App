@@ -1,6 +1,8 @@
 const Category = () => {
   return (
-    <div>Category</div>
+    <div className="mt-16">
+        
+    </div>
   )
 }
 
