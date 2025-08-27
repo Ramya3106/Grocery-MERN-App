@@ -5,7 +5,7 @@ const Category = () => {
         <div>
             {
                 Category.map((category,index)=>(
-                    <div></div>
+                    <div key={index}></div>
                 ))
             }
         </div>
