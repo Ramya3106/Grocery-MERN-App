@@ -7,7 +7,7 @@ const Category = () => {
                 Category.map((category,index)=>(
                     <div key={index} className={`group cursor-pointer py-5 px-3 rounded-lg gap-2 flex flex-col items-center justify-center`}>
                         <img src={category.img} alt="" className="max-w-28 transition group-hover:scale-110" />
-                        <p>categories</p>
+                        <p>{category.text}</p>
                     </div>
                 ))
             }
