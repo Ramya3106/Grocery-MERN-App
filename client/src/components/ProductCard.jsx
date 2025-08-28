@@ -1,3 +1,5 @@
+import { useContext } from "react";
+
 const ProductCard = ({products}) => {
     const ProductCard = ({ product }) => {
         const { navigate } = useContent(AppContent);
