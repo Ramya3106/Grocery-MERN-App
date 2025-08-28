@@ -7,7 +7,7 @@ const Category = () => {
                 <div className="my-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 md:grid-cols-7 gap-3 items-center justify-center">
                     {categories.map((category, index) => (
                         <div onClick={() => {
-                            
+                            Navigate(`/products/${category.path.toLowerCase()}`)
                         }}
                             key={index}
                             className="group cursor-pointer py-5 px-3 rounded-lg gap-2 flex flex-col items-center justify-center"
