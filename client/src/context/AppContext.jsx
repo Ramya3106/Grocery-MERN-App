@@ -7,6 +7,11 @@ const AppContextProvider = ({ children }) => {
     const [user, setuser ] = useState(null);
     const [isSeller, setIsSeller] = useState(null);
     const [showUserLogin, setShowUserLogin] = useState(false);
+
+    // fetch all products data
+    const fetchProducts=async()=>{
+        
+    }
     const value = {navigate,user,setuser,isSeller,setIsSeller,showUserLogin,setShowUserLogin};
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }
