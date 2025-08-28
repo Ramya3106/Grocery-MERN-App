@@ -1,4 +1,5 @@
 import { useContext } from "react"
+import { AppContext } from "../context/AppContext"
 const BestSeller = () => {
   return (
     <div className="mt-16">
