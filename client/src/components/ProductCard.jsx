@@ -6,7 +6,7 @@ const ProductCard = ({products}) => {
         const { navigate } = useContent(AppContent);
     }
   return product && (
-    <div className="">
+    <div className="border">
 
     </div>
   )
