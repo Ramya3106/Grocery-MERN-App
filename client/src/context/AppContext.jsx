@@ -11,7 +11,7 @@ const AppContextProvider = ({ children }) => {
 
     // fetch all products data
     const fetchProducts=async()=>{
-
+        setProducts(dummyProducts);
     }
     const value = {navigate,user,setuser,isSeller,setIsSeller,showUserLogin,setShowUserLogin};
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>
