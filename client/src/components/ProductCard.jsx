@@ -1,7 +1,7 @@
 const ProductCard = ({products}) => {
 
   return (
-    <div>ProductCard</div>
+    <div></div>
   )
 }
 
