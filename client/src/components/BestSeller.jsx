@@ -1,6 +1,6 @@
 const BestSeller = () => {
   return (
-    <div>BestSeller</div>
+    <div></div>
   )
 }
 
