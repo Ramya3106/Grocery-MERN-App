@@ -8,7 +8,7 @@ const Category = () => {
                     {categories.map((category, index) => (
                         <div onClick={() => {
                             Navigate(`/products/${category.path.toLowerCase()}`)
-                            scroll(0, 0);
+                            scrollTo(0, 0);
                         }}
                             key={index}
                             className="group cursor-pointer py-5 px-3 rounded-lg gap-2 flex flex-col items-center justify-center"
