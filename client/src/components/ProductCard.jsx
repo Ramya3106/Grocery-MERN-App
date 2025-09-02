@@ -18,7 +18,7 @@ const ProductCard = ({product}) => {
           }}
         />
         </div>
-        <div>
+        <div className="text-gray-500/60 text-sm">
           
         </div>
         
