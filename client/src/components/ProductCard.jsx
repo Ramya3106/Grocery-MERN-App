@@ -17,7 +17,9 @@ const ProductCard = ({product}) => {
             e.target.src = '/placeholder-image.jpg';
           }}
         />
-
+        </div>
+        <div>
+          
         </div>
         
 
