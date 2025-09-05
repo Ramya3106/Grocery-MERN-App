@@ -36,7 +36,7 @@ const ProductCard = ({product}) => {
           <p>(4)</p>
         </div>
         <div>
-          
+          <p>${product.offerPrice}</p>
         </div>
         </div>
         
