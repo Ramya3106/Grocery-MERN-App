@@ -35,7 +35,7 @@ const ProductCard = ({product}) => {
           }
           <p>(4)</p>
         </div>
-        <div>
+        <div className="flex items-end justify-between mt-3">
           <p>${product.offerPrice}
             <span>${product.price}</span>
           </p>
