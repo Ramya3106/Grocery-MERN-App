@@ -33,6 +33,7 @@ const ProductCard = ({product}) => {
               />
             ))
           }
+          <p>(4)</p>
         </div>
         <div>
           
