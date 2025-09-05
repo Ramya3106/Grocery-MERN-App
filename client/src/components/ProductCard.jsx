@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
+import { assets } from "../assets/assets";
 
 const ProductCard = ({product}) => {
   const { navigate } = useContext(AppContext);
@@ -24,7 +25,7 @@ const ProductCard = ({product}) => {
         <div className="flex items-center gap-0.5">
           {
             Array(5).fill('').map((_,i)=>(
-              <img/>
+              <img src={i<4?assets.star_icon:assets.star_dull_icon} alt=""/>
             ))
           }
         </div>
