@@ -22,7 +22,11 @@ const ProductCard = ({product}) => {
         <p>{product.category}</p>
         <p className="text-gray-700 font-medium textlg truncate w-full">{product.name}</p>
         <div className="flex items-center gap-0.5">
-
+          {
+            Array(5).fill('').map((_,i)=>(
+              <img/>
+            ))
+          }
         </div>
         <div>
           
