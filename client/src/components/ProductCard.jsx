@@ -25,7 +25,12 @@ const ProductCard = ({product}) => {
         <div className="flex items-center gap-0.5">
           {
             Array(5).fill('').map((_,i)=>(
-              <img src={i < 4 ? assets.star_icon:assets.star_dull_icon} alt=""/>
+              <img 
+              key={i}
+              src={i < 4 ? assets.star_icon:assets.star_dull_icon} 
+              alt="rating"
+              className="w-3 md:3.5"
+              />
             ))
           }
         </div>
