@@ -18,7 +18,10 @@ const AppContextProvider = ({ children }) => {
     }
    // // add product to cart
    const addToCart=(itemId)=>{
-    let cartData=structuredClone(cartItems)
+    let cartData=structuredClone(cartItems);
+    if(cartData[itemId]){
+        
+    }
    }
 
     useEffect(()=>{
