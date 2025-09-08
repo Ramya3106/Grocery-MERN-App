@@ -36,7 +36,8 @@ const ProductCard = ({product}) => {
                     <p className="md:text-xl text-base font-medium text-indigo-500">
                         ${product.offerPrice} <span className="text-gray-500/60 md:text-sm text-xs line-through">${product.price}</span>
                     </p>
-                    <div className="text-indigo-500">
+                    <div className="text-indigo-500"
+                    onClick={(e) => e.stopPropagation()}>
                         {count === 0 ? (
                             <button className="flex items-center justify-center gap-1 bg-indigo-100 border border-indigo-300 md:w-[80px] w-[64px] h-[34px] rounded text-indigo-600 font-medium" onClick={() => setCount(1)} >
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
