@@ -24,6 +24,7 @@ const AppContextProvider = ({ children }) => {
     }else{
         cartData[itemId] =1;
     }
+    setCartItems(cartData);
    }
 
     useEffect(()=>{
