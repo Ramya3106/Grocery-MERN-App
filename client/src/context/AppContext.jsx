@@ -9,6 +9,8 @@ const AppContextProvider = ({ children }) => {
     const [isSeller, setIsSeller] = useState(null);
     const [showUserLogin, setShowUserLogin] = useState(false);
     const[Products, setProducts] = useState([]);
+    const[cartItems, setCartItems] = useState([]);
+
 
     // fetch all products data
     const fetchProducts=async()=>{
