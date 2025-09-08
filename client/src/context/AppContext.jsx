@@ -16,6 +16,11 @@ const AppContextProvider = ({ children }) => {
     const fetchProducts=async()=>{
         setProducts(dummyProducts);
     }
+   // // add product to cart
+   const addToCart=(itemId)=>{
+    let cartData=structuredClone(cartItems)
+   }
+
     useEffect(()=>{
         fetchProducts();
     },[]);
