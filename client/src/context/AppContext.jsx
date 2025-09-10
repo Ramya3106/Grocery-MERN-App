@@ -32,7 +32,7 @@ const AppContextProvider = ({ children }) => {
     useEffect(()=>{
         fetchProducts();
     },[]);
-    const value = {navigate,user,setuser,isSeller,setIsSeller,showUserLogin,setShowUserLogin,Products};
+    const value = {navigate,user,setuser,isSeller,setIsSeller,showUserLogin,setShowUserLogin,Products,addToCart};
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }
 
