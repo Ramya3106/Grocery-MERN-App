@@ -32,7 +32,8 @@ const AppContextProvider = ({ children }) => {
    // update cart item quantity
    const updateCartItem=(itemId,quantity)=>{
     let cartData = structuredClone(cartItems);
-    
+    cartData[itemId] = quantity;
+
    }
 
     useEffect(()=>{
