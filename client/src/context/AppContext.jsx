@@ -34,7 +34,7 @@ const AppContextProvider = ({ children }) => {
     let cartData = structuredClone(cartItems);
     cartData[itemId] = quantity;
     setCartItems(cartData);
-
+    toast.success("cart updated");
    }
 
     useEffect(()=>{
