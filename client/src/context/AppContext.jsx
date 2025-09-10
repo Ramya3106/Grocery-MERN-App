@@ -25,6 +25,7 @@ const AppContextProvider = ({ children }) => {
         cartData[itemId] =1;
     }
     setCartItems(cartData);
+    toast.success("added to cart");
    }
 
     useEffect(()=>{
