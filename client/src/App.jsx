@@ -10,6 +10,7 @@ import MyOrders from "./Pages/MyOrders";
 import Auth from "./models/Auth";
 import ProductCategory from "./Pages/ProductCategory";
 import Footer from "./components/Footer";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const {isSeller, showUserLogin}=useContext(AppContext);
