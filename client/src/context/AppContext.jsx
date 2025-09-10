@@ -33,6 +33,7 @@ const AppContextProvider = ({ children }) => {
    const updateCartItem=(itemId,quantity)=>{
     let cartData = structuredClone(cartItems);
     cartData[itemId] = quantity;
+    setCartItems(cartData);
 
    }
 
