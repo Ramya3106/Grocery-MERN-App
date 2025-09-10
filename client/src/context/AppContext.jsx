@@ -29,10 +29,15 @@ const AppContextProvider = ({ children }) => {
     toast.success("added to cart");
    }
 
+   // update cart item quantity
+   const updateCartItem=(itemId,quantity)=>{
+    
+   }
+
     useEffect(()=>{
         fetchProducts();
     },[]);
-    const value = {navigate,user,setuser,isSeller,setIsSeller,showUserLogin,setShowUserLogin,Products,addToCart};
+    const value = {navigate,user,setuser,isSeller,setIsSeller,showUserLogin,setShowUserLogin,Products,addToCart,};
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }
 
