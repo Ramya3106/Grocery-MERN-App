@@ -74,7 +74,7 @@ const AppContextProvider = ({ children }) => {
     useEffect(()=>{
         fetchProducts();
     },[]);
-    const value = {navigate,user,setuser,isSeller,setIsSeller,showUserLogin,setShowUserLogin,Products,addToCart,updateCartItem,cartCount,totalCartAmount,};
+    const value = {navigate,user,setuser,isSeller,setIsSeller,showUserLogin,setShowUserLogin,Products,addToCart,updateCartItem,cartCount,totalCartAmount,removeFromCart,};
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }
 
