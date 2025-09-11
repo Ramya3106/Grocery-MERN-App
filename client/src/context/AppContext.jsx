@@ -64,7 +64,7 @@ const AppContextProvider = ({ children }) => {
     if(cartData[itemId]) {
         cartData[itemId] -= 1;
         if(cartData[itemId] ===0 ){
-            
+            delete cartData[itemId];
         }
     }
    }
