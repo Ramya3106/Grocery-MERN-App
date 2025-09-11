@@ -48,7 +48,8 @@ const AppContextProvider = ({ children }) => {
 
    // total cart amount
    const totalCartAmount=()=>{
-
+    let totalAmount=0;
+    
    }
 
     useEffect(()=>{
