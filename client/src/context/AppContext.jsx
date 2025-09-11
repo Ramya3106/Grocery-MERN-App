@@ -58,6 +58,12 @@ const AppContextProvider = ({ children }) => {
     return Math.floor(totalAmount * 1000) / 100;
    }
 
+   // remove product from cart
+   const removeFromCart=(itemId)=>{
+    let cartData=structuredClone(cartItems);
+    if(cartData)
+   }
+
     useEffect(()=>{
         fetchProducts();
     },[]);
