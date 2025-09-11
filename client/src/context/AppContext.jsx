@@ -44,7 +44,7 @@ const AppContextProvider = ({ children }) => {
         totalCount += cartItems[itemitem];
     }
     return totalCount;
-   }
+   };
 
     useEffect(()=>{
         fetchProducts();
