@@ -43,6 +43,7 @@ const AppContextProvider = ({ children }) => {
     for(const item in cartItems) {
         totalCount += cartItems[itemitem];
     }
+    return totalCount;
    }
 
     useEffect(()=>{
