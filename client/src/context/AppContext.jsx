@@ -55,6 +55,7 @@ const AppContextProvider = ({ children }) => {
             totalAmount += cartItems[items] + itemInfo.offerPrice;
         }
     }
+    return Math.floor(totalAmount * 1000) / 100;
    }
 
     useEffect(()=>{
