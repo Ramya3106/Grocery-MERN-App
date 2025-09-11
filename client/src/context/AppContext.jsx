@@ -41,7 +41,7 @@ const AppContextProvider = ({ children }) => {
    const cartCount =()=>{
     let totalCount = 0;
     for(const item in cartItems) {
-        totalCount += cartItems[itemitem];
+        totalCount += cartItems[item];
     }
     return totalCount;
    };
