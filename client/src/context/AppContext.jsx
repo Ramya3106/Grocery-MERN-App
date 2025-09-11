@@ -66,6 +66,7 @@ const AppContextProvider = ({ children }) => {
         if(cartData[itemId] ===0 ){
             delete cartData[itemId];
         }
+        toast.success("removed from cart");
     }
    }
 
