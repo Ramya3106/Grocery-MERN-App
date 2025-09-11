@@ -49,8 +49,11 @@ const AppContextProvider = ({ children }) => {
    // total cart amount
    const totalCartAmount=()=>{
     let totalAmount=0;
-    for (const item in cartItems){
-        let itemInfo=Products.find((product)=>product._id===item);
+    for (const items in cartItems){
+        let itemInfo=Products.find((product)=>product._id===items);
+        if(cartItems[items]>0){
+            totalAmount += cartItems[items] + itemInfo.offerPrice;
+        }
     }
    }
 
