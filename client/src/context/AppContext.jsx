@@ -46,6 +46,11 @@ const AppContextProvider = ({ children }) => {
     return totalCount;
    };
 
+   // total cart amount
+   const totalCartAmount=()=>{
+
+   }
+
     useEffect(()=>{
         fetchProducts();
     },[]);
