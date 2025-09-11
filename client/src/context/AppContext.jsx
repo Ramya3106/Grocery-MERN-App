@@ -37,6 +37,14 @@ const AppContextProvider = ({ children }) => {
     toast.success("cart updated");
    }
 
+   // total cart items
+   const cartCount =()=>{
+    let totalCount = 0;
+    for(const item in cartItems) {
+        totalCount += cartItems[itemitem];
+    }
+   }
+
     useEffect(()=>{
         fetchProducts();
     },[]);
