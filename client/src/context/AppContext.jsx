@@ -61,7 +61,9 @@ const AppContextProvider = ({ children }) => {
    // remove product from cart
    const removeFromCart=(itemId)=>{
     let cartData=structuredClone(cartItems);
-    if(cartData[itemId] -= 1)
+    if(cartData[itemId]) {
+
+    }
    }
 
     useEffect(()=>{
