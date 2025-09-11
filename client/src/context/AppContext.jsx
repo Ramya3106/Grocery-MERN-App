@@ -63,6 +63,9 @@ const AppContextProvider = ({ children }) => {
     let cartData=structuredClone(cartItems);
     if(cartData[itemId]) {
         cartData[itemId] -= 1;
+        if(cartData[itemId] ===0 ){
+            
+        }
     }
    }
 
