@@ -3,7 +3,7 @@ import { AppContext } from "../context/AppContext";
 import { assets } from "../assets/assets";
 
 const ProductCard = ({product}) => {
-  const { navigate } = useContext(AppContext);  
+  const { navigate,addToCart,cartItems } = useContext(AppContext);  
   const [count, setCount] = useState(0);
     
   return (
