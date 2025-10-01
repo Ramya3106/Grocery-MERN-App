@@ -1,18 +1,14 @@
-import { useContext,useState } from "react";
+import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
-import { assets } from "../assets/assets";
 
 const ProductCard = ({product}) => {
     const { navigate, addToCart, cartItems, removeFromCart } = useContext(AppContext);  
-    const [count, setCount] = useState(cartItems && product._id ? cartItems[product._id] || 0 : 0);
-    // Remove local popup state
+    
     if (!product) {
         return <div>Product not found</div>;
     }
-    const handleAddToCart = (id) => {
-        addToCart(id);
-        // Optionally trigger a global notification here
-    };
+    
+    const itemCount = cartItems[product._id] || 0;
     return (
          <div onClick={() => {
             navigate(`/product/${product.category?.toLowerCase()}/${product._id}`)
@@ -36,33 +32,34 @@ const ProductCard = ({product}) => {
                     <p className="md:text-xl text-base font-medium text-indigo-500">
                         ${product.offerPrice} <span className="text-gray-500/60 md:text-sm text-xs line-through">${product.price}</span>
                     </p>
-                    <div className="text-indigo-500"
-                    onClick={(e) => e.stopPropagation()}>
-                        <div className="flex items-center justify-center gap-2 md:w-20 w-16 h-[34px] bg-indigo-100 border border-indigo-300 rounded select-none">
-                            <button onClick={() => {
-                                const newCount = Math.max(count - 1, 0);
-                                setCount(newCount);
-                                if (product._id) {
-                                    if (newCount === 0) {
-                                        removeFromCart(product._id);
-                                    } else {
-                                        addToCart(product._id, newCount);
-                                    }
-                                }
-                            }} className="cursor-pointer text-md px-2 h-full text-indigo-600 font-medium" >
-                                -
+                    <div className="text-indigo-500" onClick={(e) => e.stopPropagation()}>
+                        {itemCount === 0 ? (
+                            <button 
+                                className="flex items-center justify-center gap-1 bg-indigo-100 border border-indigo-300 md:w-[80px] w-[64px] h-[34px] rounded text-indigo-600 font-medium" 
+                                onClick={() => addToCart(product._id)}
+                            >
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M.583.583h2.333l1.564 7.81a1.17 1.17 0 0 0 1.166.94h5.67a1.17 1.17 0 0 0 1.167-.94l.933-4.893H3.5m2.333 8.75a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0m6.417 0a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0" stroke="#615fff" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                                Add
                             </button>
-                            <span className="w-5 text-center">{count}</span>
-                            <button onClick={() => {
-                                const newCount = count + 1;
-                                setCount(newCount);
-                                if (product._id) {
-                                    addToCart(product._id, newCount);
-                                }
-                            }} className="cursor-pointer text-md px-2 h-full text-indigo-600 font-medium" >
-                                +
-                            </button>
-                        </div>
+                        ) : (
+                            <div className="flex items-center justify-center gap-2 md:w-20 w-16 h-[34px] bg-indigo-500/25 rounded select-none">
+                                <button 
+                                    onClick={() => removeFromCart(product._id)} 
+                                    className="cursor-pointer text-md px-2 h-full"
+                                >
+                                    -
+                                </button>
+                                <span className="w-5 text-center">{itemCount}</span>
+                                <button 
+                                    onClick={() => addToCart(product._id)} 
+                                    className="cursor-pointer text-md px-2 h-full"
+                                >
+                                    +
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
