@@ -2,23 +2,12 @@ import { useEffect, useState, useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import { Link, useParams } from "react-router-dom";
 import { assets } from "../assets/assets";
-import ProductCard from "../components/ProductCard";
 const productDetails = () => {
   const { Products, navigate, addToCart } = useContext(AppContext);
   const { id } = useParams();
   const [thumbnail, setThumbnail] = useState(null);
-  const [relatedProducts, setRelatedProducts] = useState([]);
   const product = Products.find((product) => product._id === id);
   console.log("product", product);
-  useEffect(() => {
-    if (Products.length > 0) {
-      let productsCopy = Products.slice();
-      productsCopy = productsCopy.filter(
-        (product) => product.category === product.category
-      );
-      setRelatedProducts(productsCopy.slice(0, 5));
-    }
-  }, [Products]);
 
   useEffect(() => {
     setThumbnail(product?.image[0] ? product.image[0] : null);
@@ -115,30 +104,6 @@ const productDetails = () => {
               </button>
             </div>
           </div>
-        </div>
-        {/* related prodcuts  */}
-        <div className="flex flex-col items-center mt-20">
-          <div className="flex flex-col items-center w-max">
-            <p className="text-2xl font-medium">Related Products</p>
-            <div className="w-20 h-0.5 bg-primary rounded-full mt-2"></div>
-          </div>
-
-          <div className="my-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 items-center justify-center">
-            {relatedProducts
-              .filter((product) => product.inStock)
-              .map((product, index) => (
-                <ProductCard key={index} product={product} />
-              ))}
-          </div>
-          <button
-            onClick={() => {
-              navigate("/products");
-              scrollTo(0, 0);
-            }}
-            className="w-1/2 my-8 py-3.5 cursor-pointer font-medium bg-indigo-500 text-white hover:bg-indigo-600 transition"
-          >
-            See More
-          </button>
         </div>
       </div>
     )
