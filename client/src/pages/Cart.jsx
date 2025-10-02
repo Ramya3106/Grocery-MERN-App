@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { useAppContext } from "../context/AppContext";
+import { useEffect, useState, useContext } from "react";
+import { AppContext } from "../context/AppContext";
 import { dummyAddress } from "../assets/assets";
 import axios from "axios";
 import toast from "react-hot-toast";
 const Cart = () => {
   const {
-    products,
+    Products,
     navigate,
     cartCount,
     totalCartAmount,
@@ -13,9 +13,8 @@ const Cart = () => {
     setCartItems,
     removeFromCart,
     updateCartItem,
-    axios,
     user,
-  } = useAppContext();
+  } = useContext(AppContext);
 
   // state to store the products available in cart
   const [cartArray, setCartArray] = useState([]);
@@ -29,7 +28,7 @@ const Cart = () => {
   const getCart = () => {
     let tempArray = [];
     for (const key in cartItems) {
-      const product = products.find((product) => product._id === key);
+      const product = Products.find((product) => product._id === key);
       product.quantity = cartItems[key];
       tempArray.push(product);
     }
@@ -58,10 +57,10 @@ const Cart = () => {
   }, [user]);
 
   useEffect(() => {
-    if (products.length > 0 && cartItems) {
+    if (Products.length > 0 && cartItems) {
       getCart();
     }
-  }, [products, cartItems]);
+  }, [Products, cartItems]);
   const placeOrder = async () => {
     try {
       if (!selectedAddress) {
@@ -88,7 +87,7 @@ const Cart = () => {
       toast.error(error.message);
     }
   };
-  return products.length > 0 && cartItems ? (
+  return Products.length > 0 && cartItems ? (
     <div className="flex flex-col md:flex-row py-16 max-w-6xl w-full px-6 mx-auto">
       <div className="flex-1 max-w-4xl">
         <h1 className="text-3xl font-medium mb-6">
