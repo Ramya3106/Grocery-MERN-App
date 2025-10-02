@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const productDetails = () => {
 
-    
+    const {products,navigate,addToCart} = useState()
     const [thumbnail, setThumbnail] = useState(product.images[0]);
 
     return product && (
