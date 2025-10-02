@@ -11,7 +11,8 @@ const SellerLogin = () => {
     }
   },[isSeller])
   const submitHandler = async (e) => {
-        e.preventDefault();   
+        e.preventDefault(); 
+        setIsSeller(true);  
     };
   return !isSeller  && (
    <div onClick={() => setShowUserLogin(false)}
