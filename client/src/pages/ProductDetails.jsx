@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 const productDetails = () => {
 
-    const {products,navigate,addToCart} = useState(AppContext)
+    const {products,navigate,addToCart} = useState(AppContext);
+    const {id} = useParams();
     const [thumbnail, setThumbnail] = useState(product.images[0]);
 
     return product && (
