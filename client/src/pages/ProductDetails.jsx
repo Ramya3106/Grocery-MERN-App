@@ -6,6 +6,7 @@ const productDetails = () => {
     const {products,navigate,addToCart} = useState(AppContext);
     const {id} = useParams();
     const [thumnail, setThumbnail]= useState(product.images[0]);
+    const product = products.find((product) => product._id === id);
     
 
     return product && (
