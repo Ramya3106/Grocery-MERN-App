@@ -1,24 +1,24 @@
-import { useEffect, useState } from "react";
-import { useAppContext } from "../context/AppContext";
+import { useEffect, useState, useContext } from "react";
+import { AppContext } from "../context/AppContext";
 import { Link, useParams } from "react-router-dom";
 import { assets } from "../assets/assets";
 import ProductCard from "../components/ProductCard";
 const productDetails = () => {
-  const { products, navigate, addToCart } = useAppContext();
+  const { Products, navigate, addToCart } = useContext(AppContext);
   const { id } = useParams();
   const [thumbnail, setThumbnail] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
-  const product = products.find((product) => product._id === id);
+  const product = Products.find((product) => product._id === id);
   console.log("product", product);
   useEffect(() => {
-    if (products.length > 0) {
-      let productsCopy = products.slice();
+    if (Products.length > 0) {
+      let productsCopy = Products.slice();
       productsCopy = productsCopy.filter(
         (product) => product.category === product.category
       );
       setRelatedProducts(productsCopy.slice(0, 5));
     }
-  }, [products]);
+  }, [Products]);
 
   useEffect(() => {
     setThumbnail(product?.image[0] ? product.image[0] : null);
