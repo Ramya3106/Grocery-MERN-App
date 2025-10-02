@@ -25,6 +25,16 @@ const Cart = () => {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentOption, setPaymentOption] = useState("COD");
 
+  // Load address from localStorage
+  useEffect(() => {
+    const savedAddress = localStorage.getItem('userAddress');
+    if (savedAddress) {
+      const parsedAddress = JSON.parse(savedAddress);
+      setAddress([parsedAddress]);
+      setSelectedAddress(parsedAddress);
+    }
+  }, []);
+
   const getCart = () => {
     let tempArray = [];
     for (const key in cartItems) {
@@ -205,15 +215,25 @@ const Cart = () => {
           <div className="relative flex justify-between items-start mt-2">
             <p className="text-gray-500">
               {selectedAddress
-                ? `${selectedAddress.street},${selectedAddress.city},${selectedAddress.state},${selectedAddress.country}`
+                ? `${selectedAddress.firstName} ${selectedAddress.lastName}, ${selectedAddress.street}, ${selectedAddress.city}, ${selectedAddress.state} ${selectedAddress.zipCode}, ${selectedAddress.country}`
                 : "No Address Found"}
             </p>
-            <button
-              onClick={() => setShowAddress(!showAddress)}
-              className="text-indigo-500 hover:underline cursor-pointer"
-            >
-              Change
-            </button>
+            <div className="flex flex-col gap-1">
+              <button
+                onClick={() => navigate("/add-address")}
+                className="text-indigo-500 hover:underline cursor-pointer text-sm"
+              >
+                {selectedAddress ? "Change" : "Add Address"}
+              </button>
+              {address.length > 1 && (
+                <button
+                  onClick={() => setShowAddress(!showAddress)}
+                  className="text-indigo-500 hover:underline cursor-pointer text-sm"
+                >
+                  Select Different
+                </button>
+              )}
+            </div>
             {showAddress && (
               <div className="absolute top-12 py-1 bg-white border border-gray-300 text-sm w-full">
                 {address.map((address, index) => (
