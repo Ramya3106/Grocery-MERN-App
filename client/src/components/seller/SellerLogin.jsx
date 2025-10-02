@@ -4,6 +4,10 @@ const SellerLogin = () => {
   const {isSeller,setIsSeller,navigate}=useContext(AppContext)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+   const submitHandler = async (e) => {
+        e.preventDefault();   
+    };
+
   return (
    <div onClick={() => setShowUserLogin(false)}
         className="fixed top-0 bottom-0 left-0 right-0 z-40 flex items-center justify-center bg-black/50 text-gray-600">
