@@ -21,10 +21,6 @@ const SellerLogin = () => {
             </div>
             
             <button
-            onClick={() => {
-                setuser(true);
-                setShowUserLogin(false);
-            }}
             className="bg-indigo-500 hover:bg-indigo-600 transition-all text-white w-full py-2 rounded-md cursor-pointer">
                 Login
             </button>
