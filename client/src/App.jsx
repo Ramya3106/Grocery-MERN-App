@@ -7,7 +7,7 @@ import Navbar from "./components/Navbar";
 import { useContext } from "react";
 import { AppContext } from "./context/AppContext";
 import MyOrders from "./Pages/MyOrders";
-import AddAddress from '/pages/AddAddress';
+import AddAddress from "./Pages/AddAddress";
 import Auth from "./models/Auth";
 import ProductCategory from "./Pages/ProductCategory";
 import Footer from "./components/Footer";
