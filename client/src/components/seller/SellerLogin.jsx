@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useContext,useEffect,useState } from 'react'
+import { AppContext } from '../../context/AppContext';
 
 const SellerLogin = () => {
   const {isSeller,setIsSeller,navigate}=useContext(AppContext)
