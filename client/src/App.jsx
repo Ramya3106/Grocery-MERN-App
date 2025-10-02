@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import { useContext } from "react";
 import { AppContext } from "./context/AppContext";
 import MyOrders from "./Pages/MyOrders";
+import AddAddress from '/pages/AddAddress';
 import Auth from "./models/Auth";
 import ProductCategory from "./Pages/ProductCategory";
 import Footer from "./components/Footer";
@@ -29,7 +30,9 @@ const App = () => {
         <Route path="/product/:category/:id" element = {<ProductDetails/>}/>
         <Route path="/products/:category" element = {<ProductCategory/>}/>
         <Route path="/Cart" element = {<Cart/>}/>
-        <Route path="my-orders" element={<MyOrders/>}/>
+        <Route path="/my-orders" element={<MyOrders/>}/>
+        <Route path="/add-address" element={<AddAddress/>}/>
+
       </Routes>
       </div>
       {isSellerPath ? null : <Footer/>}
