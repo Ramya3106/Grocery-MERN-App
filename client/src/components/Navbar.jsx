@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { AppContext } from "../context/AppContext";
@@ -6,9 +6,12 @@ import { AppContext } from "../context/AppContext";
 const Navbar = () => {
     const [open, setOpen] = useState(false)
     const  {user,setuser,navigate,setShowUserLogin,cartCount,searchQuery,setSearchQuery}=useContext(AppContext);
-    if (searchQuery.length > 0){
+   
+    useEffect(() => {
+         if (searchQuery.length > 0){
         navigate("/products")
     }
+    })
     return (
         <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white relative transition-all">
 
