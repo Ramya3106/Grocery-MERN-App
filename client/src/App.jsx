@@ -13,6 +13,7 @@ import ProductCategory from "./Pages/ProductCategory";
 import Footer from "./components/Footer";
 import { Toaster } from "react-hot-toast";
 import SellerLayout from "./Pages/seller/SellerLayout";
+import SellerLogin from "./components/seller/SellerLogin";
 
 const App = () => {
   const {isSeller, showUserLogin}=useContext(AppContext);
