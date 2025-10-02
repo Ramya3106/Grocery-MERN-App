@@ -12,6 +12,7 @@ import Auth from "./models/Auth";
 import ProductCategory from "./Pages/ProductCategory";
 import Footer from "./components/Footer";
 import { Toaster } from "react-hot-toast";
+import SellerLayout from "./Pages/seller/SellerLayout";
 
 const App = () => {
   const {isSeller, showUserLogin}=useContext(AppContext);
@@ -33,7 +34,13 @@ const App = () => {
         <Route path="/my-orders" element={<MyOrders/>}/>
         <Route path="/add-address" element={<AddAddress/>}/>
 
+       <Routes 
+       path="/seller"
+       element={isSeller ? <SellerLayout/> : <SellerLogin/>}
+       >
       </Routes>
+      </Routes>
+
       </div>
       {isSellerPath ? null : <Footer/>}
     </div>
