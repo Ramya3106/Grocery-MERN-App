@@ -14,6 +14,9 @@ import Footer from "./components/Footer";
 import { Toaster } from "react-hot-toast";
 import SellerLayout from "./Pages/seller/SellerLayout";
 import SellerLogin from "./components/seller/SellerLogin";
+import AddProduct from "./Pages/seller/AddProduct";
+import ProductList from "./Pages/seller/ProductList";
+import Orders from "./Pages/seller/Orders";
 
 const App = () => {
   const {isSeller, showUserLogin}=useContext(AppContext);
@@ -31,21 +34,31 @@ const App = () => {
         <Route path="/products" element = {<Product/>}/>
         <Route path="/product/:category/:id" element = {<ProductDetails/>}/>
         <Route path="/products/:category" element = {<ProductCategory/>}/>
-        <Route path="/Cart" element = {<Cart/>}/>
+        <Route path="/cart" element = {<Cart/>}/>
         <Route path="/my-orders" element={<MyOrders/>}/>
         <Route path="/add-address" element={<AddAddress/>}/>
 
-       <Routes 
-       path="/seller"
-       element={isSeller ? <SellerLayout/> : <SellerLogin/>}
-       >
-      </Routes>
-      </Routes>
+        <Route 
+          path="/seller/*"
+          element={isSeller ? <SellerLayout/> : <SellerLogin/>}
+        />
+        <Route 
+          path="/seller"
+          element={isSeller ? <AddProduct /> : <SellerLogin/>}
+        />
+        <Route
+          path="/seller/product-list"
+          element={isSeller ? <ProductList /> : <SellerLogin/>}
+        />
+        <Route 
+          path="/seller/orders" 
+          element={isSeller ? <Orders /> : <SellerLogin/>} 
+        />
+        </Routes>
 
       </div>
       {isSellerPath ? null : <Footer/>}
     </div>
   )
 }
-
 export default App
