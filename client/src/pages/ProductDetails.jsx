@@ -6,7 +6,7 @@ const productDetails = () => {
     const {products,navigate,addToCart} = useState(AppContext);
     const {id} = useParams();
     const [thumnail, setThumbnail]= useState(product.images[0]);
-    const [thumbnail, setThumbnail] = useState(product.images[0]);
+    
 
     return product && (
         <div className="max-w-6xl w-full px-6">
