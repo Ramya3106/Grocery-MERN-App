@@ -39,21 +39,21 @@ const App = () => {
         <Route path="/add-address" element={<AddAddress/>}/>
 
         <Route 
-          path="/seller/*"
+          path="/seller"
           element={isSeller ? <SellerLayout/> : <SellerLogin/>}
         />
         <Route 
+          index
           path="/seller"
-          element={isSeller ? <AddProduct /> : <SellerLogin/>}
+          element={isSeller ? <AddProduct /> : null}
         />
         <Route
           path="/seller/product-list"
-          element={isSeller ? <ProductList /> : <SellerLogin/>}
+          element={isSeller ? <ProductList /> : null}
         />
         <Route 
           path="/seller/orders" 
-          element={isSeller ? <Orders /> : <SellerLogin/>} 
-        />
+          element={isSeller ? <Orders /> : null } />
         </Routes>
 
       </div>
