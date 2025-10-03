@@ -44,15 +44,15 @@ const App = () => {
         />
         <Route
           path="/seller/add-product"
-          element={isSeller ? <AddProduct /> : <SellerLogin/>}
+          element={isSeller ? <AddProduct /> : null}
         />
         <Route
           path="/seller/product-list"
-          element={isSeller ? <ProductList /> : <SellerLogin/>}
+          element={isSeller ? <ProductList /> : null}
         />
         <Route 
           path="/seller/orders" 
-          element={isSeller ? <Orders /> : <SellerLogin/> } />
+          element={isSeller ? <Orders /> : null } />
         </Routes>
 
       </div>
