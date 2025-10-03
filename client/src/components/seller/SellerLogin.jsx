@@ -12,7 +12,10 @@ const SellerLogin = () => {
   },[isSeller])
   const submitHandler = async (e) => {
         e.preventDefault(); 
-        setIsSeller(true);  
+        if (email && password) {
+            setIsSeller(true);
+            navigate("/seller");
+        }
     };
   return !isSeller  && (
    <div onClick={() => navigate("/")}
