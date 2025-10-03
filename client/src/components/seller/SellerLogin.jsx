@@ -15,7 +15,7 @@ const SellerLogin = () => {
         setIsSeller(true);  
     };
   return !isSeller  && (
-   <div onClick={() => setShowUserLogin(false)}
+   <div onClick={() => navigate("/")}
         className="fixed top-0 bottom-0 left-0 right-0 z-40 flex items-center justify-center bg-black/50 text-gray-600">
             <form onClick={(e) => e.stopPropagation()}
             onSubmit={submitHandler}
