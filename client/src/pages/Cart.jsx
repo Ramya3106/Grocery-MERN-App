@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import { dummyAddress } from "../assets/assets";
-import axios from "axios";
 import toast from "react-hot-toast";
 const Cart = () => {
   const {
@@ -45,19 +44,20 @@ const Cart = () => {
     setCartArray(tempArray);
   };
 
-  const getAddress = async () => {
-    try {
-      const { data } = await axios.get("/api/address/get");
-      if (data.success) {
-        setAddress(data.addresses);
-        if (data.addresses.length > 0) {
-          setSelectedAddress(data.addresses[0]);
-        }
-      } else {
-        toast.error(data.message);
+  const getAddress = () => {
+    // Load addresses from localStorage
+    const savedAddress = localStorage.getItem('userAddress');
+    if (savedAddress) {
+      const parsedAddress = JSON.parse(savedAddress);
+      setAddress([parsedAddress]);
+      setSelectedAddress(parsedAddress);
+      toast.success("Address loaded successfully");
+    } else {
+      // Use dummy address if no saved address
+      setAddress(dummyAddress);
+      if (dummyAddress.length > 0) {
+        setSelectedAddress(dummyAddress[0]);
       }
-    } catch (error) {
-      toast.error(error.message);
     }
   };
   useEffect(() => {
@@ -71,30 +71,22 @@ const Cart = () => {
       getCart();
     }
   }, [Products, cartItems]);
-  const placeOrder = async () => {
-    try {
-      if (!selectedAddress) {
-        return toast.error("Please select an address");
-      }
-      // place order with cod
-      if (paymentOption === "COD") {
-        const { data } = await axios.post("/api/order/cod", {
-          items: cartArray.map((item) => ({
-            product: item._id,
-            quantity: item.quantity,
-          })),
-          address: selectedAddress._id,
-        });
-        if (data.success) {
-          toast.success(data.message);
-          setCartItems({});
-          navigate("/my-orders");
-        } else {
-          toast.error(data.message);
-        }
-      }
-    } catch (error) {
-      toast.error(error.message);
+  const placeOrder = () => {
+    if (!selectedAddress) {
+      return toast.error("Please select an address");
+    }
+    
+    if (cartArray.length === 0) {
+      return toast.error("Your cart is empty");
+    }
+    
+    // For demo purposes, simulate order placement
+    if (paymentOption === "COD") {
+      toast.success("Order placed successfully with Cash on Delivery!");
+      setCartItems({});
+      navigate("/my-orders");
+    } else {
+      toast.error("Only Cash on Delivery is available in demo mode");
     }
   };
   return Products.length > 0 && cartItems ? (

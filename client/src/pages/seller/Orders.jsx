@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { AppContext, useAppContext } from "../../context/AppContext";
+import { AppContext } from "../../context/AppContext";
 import { assets, dummyOrders } from "../../assets/assets";
 import toast from "react-hot-toast";
 
@@ -8,18 +8,11 @@ const Orders = () => {
     "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/e-commerce/boxIcon.svg";
 
   const [orders, setOrders] = useState([]);
-  const { axios } = useContext(AppContext);
-  const fetchOrders = async () => {
-    try {
-      const { data } = await axios.get("/api/order/seller");
-      if (data.success) {
-        setOrders(data.orders);
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      toast.error(error.message);
-    }
+  const { } = useContext(AppContext);
+  const fetchOrders = () => {
+    // Use dummy data for now since we don't have backend
+    setOrders(dummyOrders || []);
+    toast.success("Orders loaded successfully");
   };
   useEffect(() => {
     fetchOrders();
@@ -36,7 +29,7 @@ const Orders = () => {
           <div className="flex gap-5">
             <img
               className="w-12 h-12 object-cover opacity-60"
-              src={`http://localhost:5000/images/${order.items[0].product.image[0]}`}
+              src={order.items[0].product.image[0]}
               alt="boxIcon"
             />
             <>
