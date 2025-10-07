@@ -43,5 +43,11 @@ export const registerUser = async (req, res) => {
       },
       token,
     });
+     } catch (error) {
+    console.error("Error in registerUser:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 
 
