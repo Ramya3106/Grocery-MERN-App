@@ -17,3 +17,14 @@ export const registerUser = async (req, res) => {
         .status(400)
         .json({ message: "User already exists", success: false });
     }
+        const hashedPassword = await bcrypt.hash(password, 10);
+    const user = new User({
+      name,
+      email,
+      password: hashedPassword,
+    });
+    await user.save();
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
