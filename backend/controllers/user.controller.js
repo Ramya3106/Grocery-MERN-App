@@ -94,5 +94,26 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+// check auth : /api/user/is-auth
+export const checkAuth = async (req, res) => {
+  try {
+    const userId = req.user;
+
+    const user = await User.findById(userId).select("-password");
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "User not found", success: false });
+    }
+    res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (error) {
+    console.error("Error in checkAuth:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 
 
