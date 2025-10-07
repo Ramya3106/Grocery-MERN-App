@@ -34,5 +34,14 @@ export const registerUser = async (req, res) => {
       sameSite: process.env.NODE_ENV === "production" ? "none" : "Strict", // Prevent CSRF attacks
       maxAge: 7 * 24 * 60 * 60 * 1000, // Cookie expiration time (7 days)
     });
+     res.status(201).json({
+      message: "User registered successfully",
+      success: true,
+      user: {
+        name: user.name,
+        email: user.email,
+      },
+      token,
+    });
 
 
