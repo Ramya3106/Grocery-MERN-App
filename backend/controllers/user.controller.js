@@ -49,5 +49,22 @@ export const registerUser = async (req, res) => {
   }
 };
 
+// login user: /api/user/login
+
+export const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ message: "Please fill all the fields", success: false });
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "User does not exist", success: false });
+    }
 
 
