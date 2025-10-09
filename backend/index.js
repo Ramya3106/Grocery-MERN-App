@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
-// import { connectDB } from "./config/connectDB.js";
+import { connectDB } from "./config/connectDB.js";
 dotenv.config();
 import userRoutes from "./routes/user.routes.js";
 // import sellerRoutes from "./routes/seller.routes.js";
@@ -14,7 +14,6 @@ import userRoutes from "./routes/user.routes.js";
 // import { connectCloudinary } from "./config/cloudinary.js";
 
 const app = express();
-connectDB();
 
 // await connectCloudinary();
 // allow multiple origins
@@ -39,6 +38,6 @@ app.use("/api/user", userRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-//   connectDB();
+  connectDB();
   console.log(`Server is running on port ${PORT}`);
 });
