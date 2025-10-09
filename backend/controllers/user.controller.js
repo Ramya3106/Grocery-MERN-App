@@ -50,7 +50,6 @@ export const registerUser = async (req, res) => {
         name: user.name,
         email: user.email,
       },
-      token,
     });
      } catch (error) {
     console.error("Error in registerUser:", error);
