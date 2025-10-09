@@ -5,25 +5,34 @@ import jwt from "jsonwebtoken";
 // register user: /api/user/register
 export const registerUser = async (req, res) => {
   try {
+    console.log("Register request received:", req.body);
     const { name, email, password } = req.body;
+    
     if (!name || !email || !password) {
+      console.log("Missing fields:", { name: !!name, email: !!email, password: !!password });
       return res
         .status(400)
         .json({ message: "Please fill all the fields", success: false });
     }
-   const existingUser = await User.findOne({ email });
+    
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
+      console.log("User already exists:", email);
       return res
         .status(400)
         .json({ message: "User already exists", success: false });
     }
-        const hashedPassword = await bcrypt.hash(password, 10);
+    
+    const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
       name,
       email,
       password: hashedPassword,
     });
+    
     await user.save();
+    console.log("User created successfully:", email);
+    
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });

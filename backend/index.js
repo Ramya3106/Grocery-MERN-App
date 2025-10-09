@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
+import path from "path";
 import { connectDB } from "./config/connectDB.js";
 dotenv.config();
 import userRoutes from "./routes/user.routes.js";
@@ -26,6 +27,16 @@ app.use(express.json());
 app.get("/", (req,res) =>{
     res.send("Hello World");
 })
+
+// Test API endpoint
+app.get("/api/test", (req,res) =>{
+    res.json({ message: "API is working!", success: true });
+});
+
+// Serve test HTML file
+app.get("/test-register", (req, res) => {
+    res.sendFile(path.join(process.cwd(), "test-register.html"));
+});
 
 // Api endpoints
 // app.use("/images", express.static("uploads"));
