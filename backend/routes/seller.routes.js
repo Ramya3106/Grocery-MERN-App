@@ -8,3 +8,4 @@ router.get("/is-auth", authSeller, isAuthSeller);
 router.get("/logout", authSeller, sellerLogout);
 
 export default router;
+if{}
