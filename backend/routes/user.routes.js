@@ -1,6 +1,6 @@
 import express from "express";
 import {
-//   checkAuth,
+  checkAuth,
   loginUser,
   logout,
   registerUser,
