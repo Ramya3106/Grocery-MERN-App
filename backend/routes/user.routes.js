@@ -1,7 +1,7 @@
 import express from "express";
 import {
 //   checkAuth,
-//   loginUser,
+  loginUser,
 //   logout,
   registerUser,
 } from "../controllers/user.controller.js";
