@@ -9,7 +9,7 @@ import {
 const router = express.Router();
 
 router.post("/register", registerUser);
-// router.post("/login", loginUser);
+router.post("/login", loginUser);
 // router.get("/is-auth", authUser, checkAuth);
 // router.get("/logout", authUser, logout);
 
