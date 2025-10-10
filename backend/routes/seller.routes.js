@@ -3,7 +3,6 @@ import { sellerLogin,sellerLogout } from "../controllers/user.controller.js";
 import { authSeller } from "../middlewares/authSeller.js";
 const router = express.Router();
 
-router.post("/register", registerUser);
 router.post("/login", sellerLogin);
 router.get("/is-auth", authSeller, checkAuth);
 router.get("/logout", authSeller, sellerLogout);
