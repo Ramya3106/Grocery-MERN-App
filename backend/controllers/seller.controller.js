@@ -41,20 +41,20 @@ export const sellerLogin = async (req, res) => {
 //     res.status(500).json({ message: "Internal server error" });
 //   }
 // };
-// // logout seller: /api/seller/logout
-// export const sellerLogout = async (req, res) => {
-//   try {
-//     res.clearCookie("sellerToken", {
-//       httpOnly: true,
-//       secure: process.env.NODE_ENV === "production",
-//       sameSite: process.env.NODE_ENV === "production" ? "none" : "Strict",
-//     });
-//     return res.status(200).json({
-//       message: "Logged out successfully",
-//       success: true,
-//     });
-//   } catch (error) {
-//     console.error("Error in logout:", error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// };
+// logout seller: /api/seller/logout
+export const sellerLogout = async (req, res) => {
+  try {
+    res.clearCookie("sellerToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "Strict",
+    });
+    return res.status(200).json({
+      message: "Logged out successfully",
+      success: true,
+    });
+  } catch (error) {
+    console.error("Error in logout:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
