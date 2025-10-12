@@ -42,7 +42,7 @@ app.get("/test-register", (req, res) => {
 // app.use("/images", express.static("uploads"));
 app.use("/api/user", userRoutes);
 app.use("/api/seller", sellerRoutes);
-// app.use("/api/product", productRoutes);
+app.use("/api/product", productRoutes);
 // app.use("/api/cart", cartRoutes);
 // app.use("/api/address", addressRoutes);
 // app.use("/api/order", orderRoutes);
