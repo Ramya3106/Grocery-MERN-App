@@ -1,12 +1,12 @@
 import express from "express";
 
-import { authSeller } from "../middlewares/authSeller.js";
+import authSeller from "../middlewares/authSeller.js";
 import {
   addProduct,
   changeStock,
   getProductById,
   getProducts,
-} from "../controller/product.controller.js";
+} from "../controllers/product.controller.js";
 import { upload } from "../config/multer.js";
 const router = express.Router();
 
