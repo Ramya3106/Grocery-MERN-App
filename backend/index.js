@@ -44,7 +44,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/seller", sellerRoutes);
 app.use("/api/product", productRoutes);
 app.use("/api/cart", cartRoutes);
-// app.use("/api/address", addressRoutes);
+app.use("/api/address", addressRoutes);
 app.use("/api/order", orderRoutes);
 
 const PORT = process.env.PORT || 5000;
