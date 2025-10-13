@@ -4,8 +4,8 @@ import {
   getAllOrders,
   getUserOrders,
   placeOrderCOD,
-} from "../controller/order.controller.js";
-import { authSeller } from "../middlewares/authSeller.js";
+} from "../controllers/order.controller.js";
+import authSeller from "../middlewares/authSeller.js";
 
 const router = express.Router();
 router.post("/cod", authUser, placeOrderCOD);
