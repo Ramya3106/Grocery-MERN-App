@@ -10,7 +10,7 @@ import sellerRoutes from "./routes/seller.routes.js";
 import productRoutes from "./routes/product.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
 // import addressRoutes from "./routes/address.routes.js";
-// import orderRoutes from "./routes/order.routes.js";
+import orderRoutes from "./routes/order.routes.js";
 
 import { connectCloudinary } from "./config/cloudinary.js";
 
