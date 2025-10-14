@@ -1,8 +1,14 @@
 import toast from "react-hot-toast";
-import { useAppContext } from "../../context/AppContext";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../context/AppContext";
+import axios from "axios";
+
+// Configure axios for the backend
+axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.withCredentials = true;
+
 const SellerLogin = () => {
-  const { isSeller, setIsSeller, navigate, axios } = useAppContext();
+  const { isSeller, setIsSeller, navigate } = useContext(AppContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   useEffect(() => {
@@ -70,3 +76,5 @@ const SellerLogin = () => {
   );
 };
 export default SellerLogin;
+
+if{}
