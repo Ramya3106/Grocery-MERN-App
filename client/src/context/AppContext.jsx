@@ -19,7 +19,7 @@ const AppContextProvider = ({ children }) => {
 
     // fetch all products data
     const fetchProducts=async()=>{
-        setProducts(dummyProducts);
+        
     }
    // // add product to cart
    const addToCart=(itemId)=>{
