@@ -12,7 +12,14 @@ const AddProduct = () => {
   const [offerPrice, setOfferPrice] = useState("");
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    try{
+      e.preventDefault();
+      const formData =  new FormData();
+
+    }catch{
+      
+    }
+    
     
     // Validate form fields
     if (!name || !description || !category || !price || !offerPrice || files.length === 0) {
