@@ -19,8 +19,17 @@ const AppContextProvider = ({ children }) => {
 
     // fetch all products data
     const fetchProducts=async()=>{
-        
+        try {
+      const { data } = await axios.get("/api/seller/is-auth");
+      if (data.success) {
+        setIsSeller(true);
+      } else {
+        setIsSeller(false);
+      }
+    } catch (error) {
+      setIsSeller(false);
     }
+    };
    // // add product to cart
    const addToCart=(itemId)=>{
     let cartData=structuredClone(cartItems);
