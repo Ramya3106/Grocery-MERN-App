@@ -44,7 +44,7 @@ app.get("/test-seller-login", (req, res) => {
 });
 
 // Api endpoints
-// app.use("/images", express.static("uploads"));
+app.use("/images", express.static("uploads"));
 app.use("/api/user", userRoutes);
 app.use("/api/seller", sellerRoutes);
 app.use("/api/product", productRoutes);
