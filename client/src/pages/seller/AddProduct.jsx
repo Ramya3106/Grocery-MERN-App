@@ -2,13 +2,8 @@ import { assets, categories } from "../../assets/assets";
 import { useContext, useState } from "react";
 import { AppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
-import axios from "axios";
-
-// Configure axios for the backend
-axios.defaults.baseURL = "http://localhost:5000";
-axios.defaults.withCredentials = true;
 const AddProduct = () => {
-  const { isSeller } = useContext(AppContext);
+  const { axios } = useContext(AppContext);
   const [files, setFiles] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -17,22 +12,9 @@ const AddProduct = () => {
   const [offerPrice, setOfferPrice] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    // Check if seller is authenticated
-    if (!isSeller) {
-      toast.error("Please login as seller first");
-      return;
-    }
-    
-    // Validate form fields
-    const validFiles = files.filter(file => file !== undefined && file !== null);
-    if (!name || !description || !category || !price || !offerPrice || validFiles.length === 0) {
-      toast.error("Please fill all fields and select at least one image");
-      return;
-    }
-
     try {
+      e.preventDefault();
+
       const formData = new FormData();
       formData.append("name", name);
       formData.append("description", description);
@@ -40,20 +22,15 @@ const AddProduct = () => {
       formData.append("price", price);
       formData.append("offerPrice", offerPrice);
 
-      for (let i = 0; i < files.length; i++) {
-        if (files[i]) {
-          formData.append("images", files[i]);
-        }
-      }
-
-      const { data } = await axios.post("/api/product/add-product", formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      // Filter out empty files and append valid ones
+      files.filter(file => file).forEach(file => {
+        formData.append("images", file);
       });
-      
+
+      const { data } = await axios.post("/api/product/add-product", formData);
       if (data.success) {
         toast.success(data.message || "Product added successfully!");
+        
         // Reset form
         setName("");
         setDescription("");
@@ -61,6 +38,11 @@ const AddProduct = () => {
         setPrice("");
         setOfferPrice("");
         setFiles([]);
+        
+        // Refresh product list
+        if (fetchProducts) {
+          fetchProducts();
+        }
       } else {
         toast.error(data.message || "Failed to add product");
       }
@@ -68,9 +50,7 @@ const AddProduct = () => {
       console.error("Add product error:", error);
       if (error.response) {
         // Server responded with error status
-        const errorMessage = error.response.data?.message || `Server Error: ${error.response.status}`;
-        toast.error(errorMessage);
-        console.error("Response data:", error.response.data);
+        toast.error(error.response.data?.message || `Error: ${error.response.status}`);
       } else if (error.request) {
         // Network error
         toast.error("Network error. Please check if the backend server is running.");
