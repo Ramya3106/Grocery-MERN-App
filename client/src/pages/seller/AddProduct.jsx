@@ -2,8 +2,13 @@ import { assets, categories } from "../../assets/assets";
 import { useContext, useState } from "react";
 import { AppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
+import axios from "axios";
+
+// Configure axios for the backend
+axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.withCredentials = true;
 const AddProduct = () => {
-  const { } = useContext(AppContext);
+  const { isSeller } = useContext(AppContext);
   const [files, setFiles] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -11,10 +16,24 @@ const AddProduct = () => {
   const [price, setPrice] = useState("");
   const [offerPrice, setOfferPrice] = useState("");
 
-  const handleSubmit = (e) => {
-    try{
-      e.preventDefault();
-      const formData =  new FormData();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Check if seller is authenticated
+    if (!isSeller) {
+      toast.error("Please login as seller first");
+      return;
+    }
+    
+    // Validate form fields
+    const validFiles = files.filter(file => file !== undefined && file !== null);
+    if (!name || !description || !category || !price || !offerPrice || validFiles.length === 0) {
+      toast.error("Please fill all fields and select at least one image");
+      return;
+    }
+
+    try {
+      const formData = new FormData();
       formData.append("name", name);
       formData.append("description", description);
       formData.append("category", category);
@@ -22,12 +41,20 @@ const AddProduct = () => {
       formData.append("offerPrice", offerPrice);
 
       for (let i = 0; i < files.length; i++) {
-        formData.append("image", files[i]);
+        if (files[i]) {
+          formData.append("images", files[i]);
+        }
       }
 
-      const { data } = await axios.post("/api/product/add-product", formData);
+      const { data } = await axios.post("/api/product/add-product", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      
       if (data.success) {
-        toast.success(data.message);
+        toast.success(data.message || "Product added successfully!");
+        // Reset form
         setName("");
         setDescription("");
         setCategory("");
@@ -35,29 +62,23 @@ const AddProduct = () => {
         setOfferPrice("");
         setFiles([]);
       } else {
-        toast.error(data.message);
+        toast.error(data.message || "Failed to add product");
       }
-    }catch(error){
-
+    } catch (error) {
+      console.error("Add product error:", error);
+      if (error.response) {
+        // Server responded with error status
+        const errorMessage = error.response.data?.message || `Server Error: ${error.response.status}`;
+        toast.error(errorMessage);
+        console.error("Response data:", error.response.data);
+      } else if (error.request) {
+        // Network error
+        toast.error("Network error. Please check if the backend server is running.");
+      } else {
+        // Other error
+        toast.error(error.message || "An unexpected error occurred");
+      }
     }
-    
-    
-    // Validate form fields
-    if (!name || !description || !category || !price || !offerPrice || files.length === 0) {
-      toast.error("Please fill all fields and select at least one image");
-      return;
-    }
-
-    // For demo purposes, just show success message
-    toast.success("Product added successfully!");
-    
-    // Reset form
-    setName("");
-    setDescription("");
-    setCategory("");
-    setPrice("");
-    setOfferPrice("");
-    setFiles([]);
   };
 
   return (
