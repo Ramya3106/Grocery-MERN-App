@@ -21,6 +21,8 @@ const Auth = () => {
                 navigate("/");
                 setuser(data.user);
                 setShowUserLogin(false);
+            }else{
+                toast.error(data.message);
             }
         } catch (error){
           toast.error(error.message);
