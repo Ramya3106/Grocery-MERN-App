@@ -3,11 +3,18 @@ import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 
 const ProductList = () => {
-  const { Products } = useContext(AppContext);
+  const { Products, fetchProducts, axios } = useContext(AppContext);
 
-  const toggleStock = (id, inStock) => {
-    // Toggle stock functionality can be implemented later
-    toast.success(`Stock ${inStock ? 'enabled' : 'disabled'} for product`);
+  const toggleStock = async (id, inStock) => {
+    try{
+      const {data} = await axios.post("/api/produc/stock", { id, inStock });
+      if(data.success){
+        fetchProducts();
+      }
+    }
+    catch(error){
+      toast.error(data.message);
+    }
   };
   return (
     <div className="flex-1 py-10 flex flex-col justify-between">
