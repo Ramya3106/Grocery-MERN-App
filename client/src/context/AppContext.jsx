@@ -20,16 +20,30 @@ const AppContextProvider = ({ children }) => {
     // fetch all products data
     const fetchProducts=async()=>{
         try {
-      const { data } = await axios.get("/api/seller/is-auth");
-      if (data.success) {
-        setIsSeller(true);
-      } else {
-        setIsSeller(false);
-      }
-    } catch (error) {
-      setIsSeller(false);
+            const { data } = await axios.get("/api/product/list");
+            if (data.success) {
+                setProducts(data.products);
+            } else {
+                console.error("Failed to fetch products:", data.message);
+            }
+        } catch (error) {
+            console.error("Error fetching products:", error);
+        }
     }
-    };
+
+    // check seller authentication
+    const checkSellerAuth = async () => {
+        try {
+            const { data } = await axios.get("/api/seller/is-auth");
+            if (data.success) {
+                setIsSeller(true);
+            } else {
+                setIsSeller(false);
+            }
+        } catch (error) {
+            setIsSeller(false);
+        }
+    }
    // // add product to cart
    const addToCart=(itemId)=>{
     let cartData=structuredClone(cartItems);
@@ -86,8 +100,9 @@ const AppContextProvider = ({ children }) => {
 
     useEffect(()=>{
         fetchProducts();
+        checkSellerAuth();
     },[]);
-    const value = {navigate,user,setuser,isSeller,setIsSeller,showUserLogin,setShowUserLogin,Products,cartItems,addToCart,updateCartItem,cartCount,totalCartAmount,removeFromCart,searchQuery, setSearchQuery,axios,};
+    const value = {navigate,user,setuser,isSeller,setIsSeller,showUserLogin,setShowUserLogin,Products,cartItems,addToCart,updateCartItem,cartCount,totalCartAmount,removeFromCart,searchQuery, setSearchQuery,axios,fetchProducts,};
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }
 
