@@ -6,7 +6,7 @@ const Auth = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const { setShowUserLogin, setuser } = useContext(AppContext);
+    const { setShowUserLogin, setuser, axios, navigate} = useContext(AppContext);
 
     const submitHandler = async (e) => {
         e.preventDefault();   
