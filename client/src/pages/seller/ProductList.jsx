@@ -11,6 +11,8 @@ const ProductList = () => {
       if(data.success){
         fetchProducts();
         toast.success(data.message);
+      }else{
+        toast.error(data.message);
       }
     }
     catch(error){
