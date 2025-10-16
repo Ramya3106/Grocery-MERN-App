@@ -1,6 +1,5 @@
 import toast from "react-hot-toast";
 import { useState, useEffect, useContext } from "react";
-import {toast} from "react-hot-toast";
 import { AppContext } from "../../context/AppContext";
 import axios from "axios";
 
@@ -10,8 +9,8 @@ axios.defaults.withCredentials = true;
 
 const SellerLogin = () => {
   const { isSeller, setIsSeller, navigate } = useContext(AppContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("admin@gmail.com"); // Default email
+  const [password, setPassword] = useState("admin123"); // Default password
   useEffect(() => {
     if (isSeller) {
       navigate("/seller");
@@ -20,18 +19,36 @@ const SellerLogin = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+      
+      if (!email || !password) {
+        toast.error("Please fill in all fields");
+        return;
+      }
+      
       const { data } = await axios.post("/api/seller/login", {
         email,
         password,
       });
+      
       if (data.success) {
         setIsSeller(true);
+        toast.success("Login successful!");
         navigate("/seller");
       } else {
-        toast.error(data.message);
+        toast.error(data.message || "Login failed");
       }
     } catch (error) {
-      toast.error(error.message);
+      console.error("Login error:", error);
+      if (error.response) {
+        // Server responded with error status
+        toast.error(error.response.data?.message || `Error: ${error.response.status}`);
+      } else if (error.request) {
+        // Network error
+        toast.error("Network error. Please check if the backend server is running.");
+      } else {
+        // Other error
+        toast.error(error.message || "An unexpected error occurred");
+      }
     }
   };
   return (
@@ -45,6 +62,12 @@ const SellerLogin = () => {
             <span className="text-indigo-500">Seller</span>
             Login
           </p>
+          
+          <div className="text-sm text-gray-500 text-center w-full">
+            <p>Demo Credentials:</p>
+            <p>Email: admin@gmail.com</p>
+            <p>Password: admin123</p>
+          </div>
 
           <div className="w-full ">
             <p>Email</p>

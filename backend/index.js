@@ -38,6 +38,11 @@ app.get("/test-register", (req, res) => {
     res.sendFile(path.join(process.cwd(), "test-register.html"));
 });
 
+// Serve seller login test file
+app.get("/test-seller-login", (req, res) => {
+    res.sendFile(path.join(process.cwd(), "test-seller-login.html"));
+});
+
 // Api endpoints
 // app.use("/images", express.static("uploads"));
 app.use("/api/user", userRoutes);
