@@ -16,6 +16,10 @@ const Auth = () => {
                 email,
                 password,
             });
+            if(data.success){
+                toast.success(data.message);
+                navigate("/");
+            }
         } catch (error){
           toast.error(error.message);
         }
