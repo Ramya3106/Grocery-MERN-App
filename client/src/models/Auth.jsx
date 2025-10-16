@@ -9,7 +9,14 @@ const Auth = () => {
     const { setShowUserLogin, setuser, axios, navigate} = useContext(AppContext);
 
     const submitHandler = async (e) => {
-        e.preventDefault();   
+        try{
+            e.preventDefault();  
+            const {data} = await axios.post(`/api/user/${state}` , {
+                name,
+                email,
+                password,
+            });
+        } catch (error){}
     };
 
     return (
