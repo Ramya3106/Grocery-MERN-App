@@ -16,7 +16,9 @@ const Auth = () => {
                 email,
                 password,
             });
-        } catch (error){}
+        } catch (error){
+          toast.error(error.message);
+        }
     };
 
     return (
