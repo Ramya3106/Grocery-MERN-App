@@ -16,6 +16,27 @@ const AddProduct = () => {
       e.preventDefault();
       const formData =  new FormData();
       formData.append("name", name);
+      formData.append("description", description);
+      formData.append("category", category);
+      formData.append("price", price);
+      formData.append("offerPrice", offerPrice);
+
+      for (let i = 0; i < files.length; i++) {
+        formData.append("image", files[i]);
+      }
+
+      const { data } = await axios.post("/api/product/add-product", formData);
+      if (data.success) {
+        toast.success(data.message);
+        setName("");
+        setDescription("");
+        setCategory("");
+        setPrice("");
+        setOfferPrice("");
+        setFiles([]);
+      } else {
+        toast.error(data.message);
+      }
     }catch(error){
 
     }
