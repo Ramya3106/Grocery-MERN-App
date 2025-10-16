@@ -18,7 +18,7 @@ const app = express();
 connectDB();
 connectCloudinary();
 // allow multiple origins
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+const allowedOrigins = ["http://localhost:5173", "http://localhost:5174", "http://localhost:5175"];
 //middlewares
 app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(cookieParser());
@@ -41,6 +41,11 @@ app.get("/test-register", (req, res) => {
 // Serve seller login test file
 app.get("/test-seller-login", (req, res) => {
     res.sendFile(path.join(process.cwd(), "test-seller-login.html"));
+});
+
+// Serve add product test file
+app.get("/test-add-product", (req, res) => {
+    res.sendFile(path.join(process.cwd(), "test-add-product.html"));
 });
 
 // Api endpoints
