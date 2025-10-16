@@ -16,7 +16,7 @@ const ProductList = () => {
       }
     }
     catch(error){
-      toast.error(data.message);
+      toast.error(error.message);
     }
   };
   return (
