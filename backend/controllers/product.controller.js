@@ -32,9 +32,15 @@ export const addProduct = async (req, res) => {
 
     const savedProduct = await product.save();
 
+    // Convert image filenames to full URLs for response
+    const productWithImages = {
+      ...savedProduct.toObject(),
+      image: savedProduct.image.map(filename => `${req.protocol}://${req.get('host')}/images/${filename}`)
+    };
+
     return res.status(201).json({
       success: true,
-      product: savedProduct,
+      product: productWithImages,
       message: "Product added successfully",
     });
   } catch (error) {
@@ -50,7 +56,12 @@ export const addProduct = async (req, res) => {
 export const getProducts = async (req, res) => {
   try {
     const products = await Product.find({});
-    res.status(200).json({ success: true, products });
+    // Convert image filenames to full URLs
+    const productsWithImages = products.map(product => ({
+      ...product.toObject(),
+      image: product.image.map(filename => `${req.protocol}://${req.get('host')}/images/${filename}`)
+    }));
+    res.status(200).json({ success: true, products: productsWithImages });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
