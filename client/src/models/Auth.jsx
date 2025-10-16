@@ -19,6 +19,8 @@ const Auth = () => {
             if(data.success){
                 toast.success(data.message);
                 navigate("/");
+                setuser(data.user);
+                setShowUserLogin(false);
             }
         } catch (error){
           toast.error(error.message);
