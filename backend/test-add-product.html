@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Add Product</title>
+</head>
+<body>
+    <h1>Test Add Product API</h1>
+    <form id="productForm">
+        <input type="text" id="name" placeholder="Product Name" required><br><br>
+        <textarea id="description" placeholder="Description" required></textarea><br><br>
+        <select id="category" required>
+            <option value="">Select Category</option>
+            <option value="Fruits">Fruits</option>
+            <option value="Vegetables">Vegetables</option>
+            <option value="Dairy">Dairy</option>
+        </select><br><br>
+        <input type="number" id="price" placeholder="Price" required><br><br>
+        <input type="number" id="offerPrice" placeholder="Offer Price" required><br><br>
+        <input type="file" id="image" accept="image/*" multiple><br><br>
+        <button type="submit">Add Product</button>
+    </form>
+
+    <script>
+        document.getElementById('productForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('name', document.getElementById('name').value);
+            formData.append('description', document.getElementById('description').value);
+            formData.append('category', document.getElementById('category').value);
+            formData.append('price', document.getElementById('price').value);
+            formData.append('offerPrice', document.getElementById('offerPrice').value);
+            
+            const files = document.getElementById('image').files;
+            for (let i = 0; i < files.length; i++) {
+                formData.append('images', files[i]);
+            }
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/product/add-product', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include'
+                });
+                
+                const data = await response.json();
+                alert(JSON.stringify(data, null, 2));
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>
