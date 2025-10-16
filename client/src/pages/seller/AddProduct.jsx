@@ -15,9 +15,9 @@ const AddProduct = () => {
     try{
       e.preventDefault();
       const formData =  new FormData();
+      formData.append("name", name);
+    }catch(error){
 
-    }catch{
-      
     }
     
     
