@@ -61,36 +61,53 @@ export const registerUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
   try {
+    console.log("Login request received:", req.body);
     const { email, password } = req.body;
 
     if (!email || !password) {
+      console.log("Missing fields:", { email: !!email, password: !!password });
       return res
         .status(400)
         .json({ message: "Please fill all the fields", success: false });
     }
+    
+    console.log("Looking for user with email:", email);
     const user = await User.findOne({ email });
+    console.log("User found:", !!user);
+    
     if (!user) {
+      console.log("User not found in database");
       return res
         .status(400)
         .json({ message: "User does not exist", success: false });
     }
-     const isMatch = await bcrypt.compare(password, user.password);
+    
+    console.log("Comparing passwords...");
+    const isMatch = await bcrypt.compare(password, user.password);
+    console.log("Password match:", isMatch);
+     
     if (!isMatch) {
+      console.log("Password mismatch");
       return res
         .status(400)
         .json({ message: "Invalid credentials", success: false });
     }
+    
+    console.log("Creating JWT token...");
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
+    
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "Strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
+    
+    console.log("Login successful for user:", email);
     res.status(200).json({
-      message: "Logged in successfull",
+      message: "Logged in successfully",
       success: true,
       user: {
         name: user.name,
@@ -141,3 +158,18 @@ export const logout = async (req, res) => {
 };
 
 
+
+// Debug endpoint to list all users (remove in production)
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find({}).select("-password");
+    res.status(200).json({
+      success: true,
+      count: users.length,
+      users: users
+    });
+  } catch (error) {
+    console.error("Error in getAllUsers:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
