@@ -44,6 +44,20 @@ const AppContextProvider = ({ children }) => {
             setIsSeller(false);
         }
     }
+
+    // check user authentication
+    const checkUserAuth = async () => {
+        try {
+            const { data } = await axios.get("/api/user/is-auth");
+            if (data.success) {
+                setuser(data.user);
+            } else {
+                setuser(null);
+            }
+        } catch (error) {
+            setuser(null);
+        }
+    }
    // // add product to cart
    const addToCart=(itemId)=>{
     let cartData=structuredClone(cartItems);
@@ -101,8 +115,9 @@ const AppContextProvider = ({ children }) => {
     useEffect(()=>{
         fetchProducts();
         checkSellerAuth();
+        checkUserAuth();
     },[]);
-    const value = {navigate,user,setuser,isSeller,setIsSeller,showUserLogin,setShowUserLogin,Products,cartItems,addToCart,updateCartItem,cartCount,totalCartAmount,removeFromCart,searchQuery, setSearchQuery,axios,fetchProducts,};
+    const value = {navigate,user,setuser,isSeller,setIsSeller,showUserLogin,setShowUserLogin,Products,cartItems,addToCart,updateCartItem,cartCount,totalCartAmount,removeFromCart,searchQuery, setSearchQuery,axios,fetchProducts,checkUserAuth,};
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }
 
