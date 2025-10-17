@@ -111,6 +111,18 @@ const AppContextProvider = ({ children }) => {
         setCartItems(cartData);
     }
    }
+   useEffect(() => {
+     const updateCart = async () => {
+    try {
+        const {data} = await axios.put("/api/cart/update", {cart: cartItems});   
+        if(!data.success) {
+            toast.error(data.message);
+        } 
+    }catch(error) {
+        toast.error(error.message);
+    }
+   };
+   }, [cartItems]);
 
     useEffect(()=>{
         fetchProducts();
