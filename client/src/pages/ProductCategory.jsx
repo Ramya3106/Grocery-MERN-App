@@ -6,13 +6,18 @@ import { useParams } from "react-router-dom";
 const ProductCategory = () => {
   const { Products } = useContext(AppContext);
   const { category } = useParams();
+  
   const searchCategory = categories.find(
-    (item) => item.path.toLowerCase() === category
+    (item) => item.path.toLowerCase() === category?.toLowerCase()
   );
 
-  const filteredProducts = Products.filter(
-    (product) => product.category.toLowerCase() === category
-  );
+  // Fixed filtering logic - match product category with the category path
+  const filteredProducts = Products.filter((product) => {
+    if (!product.category || !searchCategory) return false;
+    
+    // Compare product category with the original category path (case-insensitive)
+    return product.category.toLowerCase() === searchCategory.path.toLowerCase();
+  });
   return (
     <div className="mt-16">
       {searchCategory && (
@@ -31,10 +36,16 @@ const ProductCategory = () => {
           </div>
         </div>
       ) : (
-        <div>
-          <h1 className="text-3xl md:text-4xl font-medium">
+        <div className="text-center py-10">
+          <h1 className="text-3xl md:text-4xl font-medium mb-4">
             No products found
           </h1>
+          <p className="text-gray-600 mb-4">
+            We don't have any products in the {searchCategory?.text || category} category yet.
+          </p>
+          <p className="text-gray-500">
+            Check back soon or browse other categories!
+          </p>
         </div>
       )}
     </div>
