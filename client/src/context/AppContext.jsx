@@ -15,6 +15,8 @@ const AppContextProvider = ({ children }) => {
     const[Products, setProducts] = useState([]);
     const[cartItems, setCartItems] = useState({});
     const[searchQuery, setSearchQuery] = useState({});
+    const[userAddresses, setUserAddresses] = useState([]);
+    const[userOrders, setUserOrders] = useState([]);
 
 
     // fetch all products data
@@ -60,6 +62,42 @@ const AppContextProvider = ({ children }) => {
             }
         } catch (error) {
             setuser(null);
+        }
+    }
+
+    // fetch user addresses
+    const fetchUserAddresses = async () => {
+        try {
+            if (!user) {
+                setUserAddresses([]);
+                return;
+            }
+            
+            const { data } = await axios.get("/api/address/get");
+            if (data.success) {
+                setUserAddresses(data.addresses || []);
+            }
+        } catch (error) {
+            console.error("Error fetching addresses:", error);
+            setUserAddresses([]);
+        }
+    }
+
+    // fetch user orders
+    const fetchUserOrders = async () => {
+        try {
+            if (!user) {
+                setUserOrders([]);
+                return;
+            }
+            
+            const { data } = await axios.get("/api/order/user");
+            if (data.success) {
+                setUserOrders(data.orders || []);
+            }
+        } catch (error) {
+            console.error("Error fetching orders:", error);
+            setUserOrders([]);
         }
     }
    // // add product to cart
@@ -152,7 +190,13 @@ const AppContextProvider = ({ children }) => {
         checkSellerAuth();
         checkUserAuth();
     },[]);
-    const value = {navigate,user,setuser,isSeller,setIsSeller,showUserLogin,setShowUserLogin,Products,cartItems,addToCart,updateCartItem,cartCount,totalCartAmount,removeFromCart,searchQuery, setSearchQuery,axios,fetchProducts,checkUserAuth,};
+
+    // Fetch addresses and orders when user changes
+    useEffect(() => {
+        fetchUserAddresses();
+        fetchUserOrders();
+    }, [user]);
+    const value = {navigate,user,setuser,isSeller,setIsSeller,showUserLogin,setShowUserLogin,Products,cartItems,setCartItems,addToCart,updateCartItem,cartCount,totalCartAmount,removeFromCart,searchQuery, setSearchQuery,axios,fetchProducts,checkUserAuth,userAddresses,fetchUserAddresses,userOrders,fetchUserOrders,};
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }
 
