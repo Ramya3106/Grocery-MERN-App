@@ -51,6 +51,10 @@ const AppContextProvider = ({ children }) => {
             const { data } = await axios.get("/api/user/is-auth");
             if (data.success) {
                 setuser(data.user);
+                // Load user's cart data if available
+                if (data.user.cartItems) {
+                    setCartItems(data.user.cartItems);
+                }
             } else {
                 setuser(null);
             }
@@ -59,12 +63,12 @@ const AppContextProvider = ({ children }) => {
         }
     }
    // // add product to cart
-   const addToCart=(itemId)=>{
-    let cartData=structuredClone(cartItems);
+   const addToCart = async (itemId) => {
+    let cartData = structuredClone(cartItems);
     if(cartData[itemId]){
         cartData[itemId] += 1;
     }else{
-        cartData[itemId] =1;
+        cartData[itemId] = 1;
     }
     setCartItems(cartData);
     toast.success("added to cart");
@@ -113,19 +117,35 @@ const AppContextProvider = ({ children }) => {
    }
    useEffect(() => {
      const updateCart = async () => {
-    try {
-        const {data} = await axios.put("/api/cart/update", {cart: cartItems});   
-        if(!data.success) {
-            toast.error(data.message);
-        } 
-    }catch(error) {
-        toast.error(error.message);
-    }
-   };
-   if(user) {
-    updateCart();
-   }
-   }, [cartItems]);
+        // Only sync cart with backend if user is authenticated
+        if (!user) {
+            return; // For guest users, just keep cart in local state
+        }
+        
+        try {
+            const {data} = await axios.post("/api/cart/update", {cartItems: cartItems});   
+            if(!data.success) {
+                toast.error(data.message);
+            } 
+        } catch(error) {
+            console.error("Cart update error:", error);
+            if (error.response) {
+                // Don't show error for authentication issues when user is not logged in
+                if (error.response.status === 401 || error.response.status === 404) {
+                    console.log("Cart sync skipped - user not authenticated");
+                    return;
+                }
+                toast.error(error.response.data?.message || `Error: ${error.response.status}`);
+            } else if (error.request) {
+                console.log("Network error during cart sync");
+            } else {
+                toast.error(error.message || "An unexpected error occurred");
+            }
+        }
+     };
+     
+     updateCart();
+   }, [cartItems, user]);
 
     useEffect(()=>{
         fetchProducts();
