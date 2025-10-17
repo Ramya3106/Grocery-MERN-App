@@ -48,6 +48,11 @@ app.get("/test-add-product", (req, res) => {
     res.sendFile(path.join(process.cwd(), "test-add-product.html"));
 });
 
+// Serve user auth test file
+app.get("/test-user-auth", (req, res) => {
+    res.sendFile(path.join(process.cwd(), "test-user-auth.html"));
+});
+
 // Api endpoints
 app.use("/images", express.static("uploads"));
 app.use("/api/user", userRoutes);
