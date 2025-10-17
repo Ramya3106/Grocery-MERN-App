@@ -33,7 +33,7 @@ const ProductCard = ({product}) => {
                         ${product.offerPrice} <span className="text-gray-500/60 md:text-sm text-xs line-through">${product.price}</span>
                     </p>
                     <div className="text-indigo-500" onClick={(e) => e.stopPropagation()}>
-                        {itemCount === 0 ? (
+                        {!cartItems ?. [product._id] ? (
                             <button 
                                 className="flex items-center justify-center gap-1 bg-indigo-100 border border-indigo-300 md:w-[80px] w-[64px] h-[34px] rounded text-indigo-600 font-medium" 
                                 onClick={() => addToCart(product._id)}
