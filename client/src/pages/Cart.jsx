@@ -24,16 +24,6 @@ const Cart = () => {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentOption, setPaymentOption] = useState("COD");
 
-  // Load address from localStorage
-  useEffect(() => {
-    const savedAddress = localStorage.getItem('userAddress');
-    if (savedAddress) {
-      const parsedAddress = JSON.parse(savedAddress);
-      setAddress([parsedAddress]);
-      setSelectedAddress(parsedAddress);
-    }
-  }, []);
-
   const getCart = () => {
     let tempArray = [];
     for (const key in cartItems) {
@@ -44,8 +34,8 @@ const Cart = () => {
     setCartArray(tempArray);
   };
 
-  const getAddress = () => {
-    // Load addresses from localStorage
+  // Load address once when component mounts
+  useEffect(() => {
     const savedAddress = localStorage.getItem('userAddress');
     if (savedAddress) {
       const parsedAddress = JSON.parse(savedAddress);
@@ -59,12 +49,7 @@ const Cart = () => {
         setSelectedAddress(dummyAddress[0]);
       }
     }
-  };
-  useEffect(() => {
-    if (user) {
-      getAddress();
-    }
-  }, [user]);
+  }, []); // Empty dependency array ensures this runs only once
 
   useEffect(() => {
     if (Products.length > 0 && cartItems) {
