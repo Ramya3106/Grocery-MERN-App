@@ -16,36 +16,108 @@ const AddAddress = () => {
     phone: "",
   });
   const [savedAddress, setSavedAddress] = React.useState(null);
-  const { navigate } = useContext(AppContext);
+  const { navigate, user, axios, fetchUserAddresses } = useContext(AppContext);
   
   const handleChange = (e) => {
     setAddress({ ...address, [e.target.name]: e.target.value });
   };
 
+  // Load addresses from backend
+  const loadAddresses = async () => {
+    try {
+      if (!user) {
+        // For non-authenticated users, try localStorage
+        const saved = localStorage.getItem('userAddress');
+        if (saved) {
+          setSavedAddress(JSON.parse(saved));
+        }
+        return;
+      }
+      
+      const { data } = await axios.get("/api/address/get");
+      if (data.success && data.addresses.length > 0) {
+        // Use the most recent address
+        const latestAddress = data.addresses[data.addresses.length - 1];
+        setSavedAddress(latestAddress);
+        // Also save to localStorage as backup
+        localStorage.setItem('userAddress', JSON.stringify(latestAddress));
+      } else {
+        // Fallback to localStorage if no addresses in database
+        const saved = localStorage.getItem('userAddress');
+        if (saved) {
+          setSavedAddress(JSON.parse(saved));
+        }
+      }
+    } catch (error) {
+      console.error("Error loading addresses:", error);
+      // Fallback to localStorage on error
+      const saved = localStorage.getItem('userAddress');
+      if (saved) {
+        setSavedAddress(JSON.parse(saved));
+      }
+    }
+  };
+
   const submitHanlder = async (e) => {
     try {
       e.preventDefault();
-      // Save address locally instead of API call
-      setSavedAddress(address);
-      localStorage.setItem('userAddress', JSON.stringify(address));
-      toast.success("Address saved successfully!");
-      console.log("Saved Address:", address);
-      // Navigate back to cart after saving
-      setTimeout(() => {
-        navigate("/cart");
-      }, 1500);
+      
+      // Check if user is authenticated
+      if (!user) {
+        toast.error("Please login to save address");
+        return;
+      }
+      
+      // Validate required fields
+      const requiredFields = ['firstName', 'lastName', 'email', 'street', 'city', 'state', 'zipCode', 'country', 'phone'];
+      const missingFields = requiredFields.filter(field => !address[field]);
+      
+      if (missingFields.length > 0) {
+        toast.error("Please fill in all required fields");
+        return;
+      }
+      
+      // Save address to MongoDB via API
+      const { data } = await axios.post("/api/address/add", { address });
+      
+      if (data.success) {
+        setSavedAddress(address);
+        // Also save to localStorage as backup
+        localStorage.setItem('userAddress', JSON.stringify(address));
+        toast.success(data.message || "Address saved successfully!");
+        console.log("Saved Address:", address);
+        
+        // Refresh addresses in context
+        if (fetchUserAddresses) {
+          fetchUserAddresses();
+        }
+        
+        // Navigate back to cart after saving
+        setTimeout(() => {
+          navigate("/cart");
+        }, 1500);
+      } else {
+        toast.error(data.message || "Failed to save address");
+      }
     } catch (error) {
-      toast.error("Error saving address");
+      console.error("Address save error:", error);
+      if (error.response) {
+        if (error.response.status === 401) {
+          toast.error("Please login to save address");
+        } else {
+          toast.error(error.response.data?.message || `Error: ${error.response.status}`);
+        }
+      } else if (error.request) {
+        toast.error("Network error. Please check if the backend server is running.");
+      } else {
+        toast.error(error.message || "An unexpected error occurred");
+      }
     }
   };
 
   useEffect(() => {
-    // Load saved address from localStorage
-    const saved = localStorage.getItem('userAddress');
-    if (saved) {
-      setSavedAddress(JSON.parse(saved));
-    }
-  }, []);
+    loadAddresses();
+  }, [user]);
   return (
     <div className="mt-12 flex flex-col md:flex-row gap-6 p-6 bg-gray-100 rounded-lg shadow-md">
       {/* Left Side: Address Fields */}
