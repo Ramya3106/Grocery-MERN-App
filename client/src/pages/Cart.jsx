@@ -13,6 +13,8 @@ const Cart = () => {
     removeFromCart,
     updateCartItem,
     user,
+    axios,
+    fetchUserOrders,
   } = useContext(AppContext);
 
   // state to store the products available in cart
@@ -34,44 +36,140 @@ const Cart = () => {
     setCartArray(tempArray);
   };
 
-  // Load address once when component mounts
-  useEffect(() => {
-    const savedAddress = localStorage.getItem('userAddress');
-    if (savedAddress) {
-      const parsedAddress = JSON.parse(savedAddress);
-      setAddress([parsedAddress]);
-      setSelectedAddress(parsedAddress);
-      toast.success("Address loaded successfully");
-    } else {
-      // Use dummy address if no saved address
-      setAddress(dummyAddress);
-      if (dummyAddress.length > 0) {
-        setSelectedAddress(dummyAddress[0]);
+  // Load addresses from backend
+  const loadAddresses = async () => {
+    try {
+      if (!user) {
+        // For non-authenticated users, try localStorage
+        const savedAddress = localStorage.getItem('userAddress');
+        if (savedAddress) {
+          const parsedAddress = JSON.parse(savedAddress);
+          setAddress([parsedAddress]);
+          setSelectedAddress(parsedAddress);
+          toast.success("Address loaded successfully");
+        } else {
+          // Use dummy address if no saved address
+          setAddress(dummyAddress);
+          if (dummyAddress.length > 0) {
+            setSelectedAddress(dummyAddress[0]);
+          }
+        }
+        return;
+      }
+      
+      const { data } = await axios.get("/api/address/get");
+      if (data.success && data.addresses.length > 0) {
+        setAddress(data.addresses);
+        // Use the most recent address as selected
+        const latestAddress = data.addresses[data.addresses.length - 1];
+        setSelectedAddress(latestAddress);
+        // Also save to localStorage as backup
+        localStorage.setItem('userAddress', JSON.stringify(latestAddress));
+        toast.success("Address loaded successfully");
+      } else {
+        // Fallback to localStorage if no addresses in database
+        const savedAddress = localStorage.getItem('userAddress');
+        if (savedAddress) {
+          const parsedAddress = JSON.parse(savedAddress);
+          setAddress([parsedAddress]);
+          setSelectedAddress(parsedAddress);
+          toast.success("Address loaded successfully");
+        } else {
+          // Use dummy address if no saved address
+          setAddress(dummyAddress);
+          if (dummyAddress.length > 0) {
+            setSelectedAddress(dummyAddress[0]);
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Error loading addresses:", error);
+      // Fallback to localStorage on error
+      const savedAddress = localStorage.getItem('userAddress');
+      if (savedAddress) {
+        const parsedAddress = JSON.parse(savedAddress);
+        setAddress([parsedAddress]);
+        setSelectedAddress(parsedAddress);
+        toast.success("Address loaded successfully");
+      } else {
+        // Use dummy address if no saved address
+        setAddress(dummyAddress);
+        if (dummyAddress.length > 0) {
+          setSelectedAddress(dummyAddress[0]);
+        }
       }
     }
-  }, []); // Empty dependency array ensures this runs only once
+  };
+
+  // Load address once when component mounts
+  useEffect(() => {
+    loadAddresses();
+  }, [user]); // Depend on user to reload when auth state changes
 
   useEffect(() => {
     if (Products.length > 0 && cartItems) {
       getCart();
     }
   }, [Products, cartItems]);
-  const placeOrder = () => {
-    if (!selectedAddress) {
-      return toast.error("Please select an address");
-    }
-    
-    if (cartArray.length === 0) {
-      return toast.error("Your cart is empty");
-    }
-    
-    // For demo purposes, simulate order placement
-    if (paymentOption === "COD") {
-      toast.success("Order placed successfully with Cash on Delivery!");
-      setCartItems({});
-      navigate("/my-orders");
-    } else {
-      toast.error("Only Cash on Delivery is available in demo mode");
+  const placeOrder = async () => {
+    try {
+      if (!user) {
+        toast.error("Please login to place an order");
+        return;
+      }
+      
+      if (!selectedAddress) {
+        return toast.error("Please select an address");
+      }
+      
+      if (cartArray.length === 0) {
+        return toast.error("Your cart is empty");
+      }
+      
+      // Prepare order data for backend
+      const orderItems = cartArray.map(item => ({
+        product: item._id,
+        quantity: item.quantity
+      }));
+      
+      const orderData = {
+        items: orderItems,
+        address: selectedAddress._id || selectedAddress // Use address ID if available, otherwise full object
+      };
+      
+      if (paymentOption === "COD") {
+        // Call backend API to place order
+        const { data } = await axios.post("/api/order/cod", orderData);
+        
+        if (data.success) {
+          toast.success(data.message || "Order placed successfully with Cash on Delivery!");
+          setCartItems({}); // Clear cart
+          
+          // Refresh orders in context
+          if (fetchUserOrders) {
+            fetchUserOrders();
+          }
+          
+          navigate("/my-orders");
+        } else {
+          toast.error(data.message || "Failed to place order");
+        }
+      } else {
+        toast.error("Only Cash on Delivery is available in demo mode");
+      }
+    } catch (error) {
+      console.error("Order placement error:", error);
+      if (error.response) {
+        if (error.response.status === 401) {
+          toast.error("Please login to place an order");
+        } else {
+          toast.error(error.response.data?.message || `Error: ${error.response.status}`);
+        }
+      } else if (error.request) {
+        toast.error("Network error. Please check if the backend server is running.");
+      } else {
+        toast.error(error.message || "An unexpected error occurred while placing order");
+      }
     }
   };
   return Products.length > 0 && cartItems ? (
