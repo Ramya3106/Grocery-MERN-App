@@ -122,6 +122,9 @@ const AppContextProvider = ({ children }) => {
         toast.error(error.message);
     }
    };
+   if(user) {
+    updateCart();
+   }
    }, [cartItems]);
 
     useEffect(()=>{
