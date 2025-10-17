@@ -1,12 +1,13 @@
 import { useState, useContext } from "react";
 import { AppContext } from "../context/AppContext";
+import toast from "react-hot-toast";
 
 const Auth = () => {
     const [state, setState] = useState("login");
     const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const { setShowUserLogin, setuser, axios, navigate} = useContext(AppContext);
+    const [email, setEmail] = useState("babar3@gmail.com"); // Default to existing user
+    const [password, setPassword] = useState("123456"); // Default password
+    const { setShowUserLogin, setuser, axios, navigate, checkUserAuth} = useContext(AppContext);
 
     const submitHandler = async (e) => {
         try{
@@ -18,14 +19,37 @@ const Auth = () => {
             });
             if(data.success){
                 toast.success(data.message);
-                navigate("/");
                 setuser(data.user);
                 setShowUserLogin(false);
+                
+                // Refresh user authentication status
+                if (checkUserAuth) {
+                    checkUserAuth();
+                }
+                
+                // Clear form
+                setName("");
+                setEmail("");
+                setPassword("");
+                
+                navigate("/");
             }else{
                 toast.error(data.message);
             }
         } catch (error){
-          toast.error(error.message);
+            console.error("Auth error:", error);
+            if (error.response) {
+                const errorMessage = error.response.data?.message;
+                if (errorMessage === "User does not exist" && state === "login") {
+                    toast.error("User not found. Please register first or use existing demo credentials.");
+                } else {
+                    toast.error(errorMessage || `Error: ${error.response.status}`);
+                }
+            } else if (error.request) {
+                toast.error("Network error. Please check if the backend server is running.");
+            } else {
+                toast.error(error.message || "An unexpected error occurred");
+            }
         }
     };
 
@@ -38,6 +62,15 @@ const Auth = () => {
             <p className="text-2xl font-medium m-auto">
                 <span className="text-indigo-500">User</span> {state === "login" ? "Login" : "Sign Up"}
             </p>
+            
+            {state === "login" && (
+                <div className="text-sm text-gray-500 text-center w-full">
+                    <p>Demo Credentials:</p>
+                    <p>Email: babar3@gmail.com</p>
+                    <p>Password: 123456</p>
+                </div>
+            )}
+            
             {state === "register" && (
                 <div className="w-full">
                     <p>Name</p>
@@ -62,10 +95,7 @@ const Auth = () => {
                 </p>
             )}
             <button
-            onClick={() => {
-                setuser(true);
-                setShowUserLogin(false);
-            }}
+            type="submit"
             className="bg-indigo-500 hover:bg-indigo-600 transition-all text-white w-full py-2 rounded-md cursor-pointer">
                 {state === "register" ? "Create Account" : "Login"}
             </button>
