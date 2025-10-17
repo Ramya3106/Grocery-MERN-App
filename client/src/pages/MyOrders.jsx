@@ -1,21 +1,31 @@
 import { useContext, useEffect, useState } from "react";
-import { dummyOrders } from "../assets/assets";
 import { AppContext } from "../context/AppContext";
 import toast from "react-hot-toast";
 
 const MyOrders = () => {
   const [myOrders, setMyOrders] = useState([]);
-  const { } = useContext(AppContext);
+  const { userOrders, fetchUserOrders, token } = useContext(AppContext);
   
-  const fetchOrders = () => {
-    // Use dummy data for demonstration
-    setMyOrders(dummyOrders || []);
-    toast.success("Orders loaded successfully");
+  const fetchOrders = async () => {
+    try {
+      if (token) {
+        await fetchUserOrders();
+        setMyOrders(userOrders || []);
+        toast.success("Orders loaded successfully");
+      }
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+      toast.error("Failed to load orders");
+    }
   };
 
   useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [token]);
+
+  useEffect(() => {
+    setMyOrders(userOrders || []);
+  }, [userOrders]);
   return (
     <div className="mt-12 pb-16">
       <div>
@@ -42,15 +52,18 @@ const MyOrders = () => {
               <div className="flex items-center mb-4 md:mb-0">
                 <div className="p-4 rounded-lg">
                   <img
-                    src={item.product.image[0]}
-                    alt=""
-                    className="w-16 h-16"
+                    src={item.product?.image?.[0] || '/vite.svg'}
+                    alt={item.product?.name || 'Product'}
+                    className="w-16 h-16 object-contain"
+                    onError={(e) => {
+                      e.target.src = '/vite.svg';
+                    }}
                   />
                 </div>
 
                 <div className="ml-4">
-                  <h2 className="text-xl font-medium">{item.product.name}</h2>
-                  <p>{item.product.category}</p>
+                  <h2 className="text-xl font-medium">{item.product?.name || 'Product Name'}</h2>
+                  <p>{item.product?.category || 'Category'}</p>
                 </div>
               </div>
 
@@ -60,7 +73,7 @@ const MyOrders = () => {
                 <p>Date:{new Date(order.createdAt).toLocaleString()}</p>
               </div>
               <p className=" text-lg">
-                Amount:${item.product.offerPrice * item.quantity}
+                Amount:${(item.product?.offerPrice || item.product?.price || 0) * (item.quantity || 1)}
               </p>
             </div>
           ))}
