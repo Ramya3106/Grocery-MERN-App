@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 import { Toaster } from "react-hot-toast";
 import SellerLayout from "./Pages/seller/SellerLayout";
 import SellerLogin from "./components/seller/SellerLogin";
+import SellerAuthGuard from "./components/seller/SellerAuthGuard";
 import AddProduct from "./Pages/seller/AddProduct";
 import ProductList from "./Pages/seller/ProductList";
 import Orders from "./Pages/seller/Orders";
@@ -40,7 +41,11 @@ const App = () => {
 
         <Route 
           path="/seller/*"
-          element={isSeller ? <SellerLayout/> : <SellerLogin/>}
+          element={
+            <SellerAuthGuard>
+              <SellerLayout />
+            </SellerAuthGuard>
+          }
         >
           <Route index element={<AddProduct />} />
           <Route path="product-list" element={<ProductList />} />
