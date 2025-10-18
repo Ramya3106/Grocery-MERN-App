@@ -10,7 +10,7 @@ export const AppContext = createContext(null);
 const AppContextProvider = ({ children }) => {
     const navigate = useNavigate();
     const [user, setuser ] = useState(null);
-    const [isSeller, setIsSeller] = useState(null);
+    const [isSeller, setIsSeller] = useState(false);
     const [showUserLogin, setShowUserLogin] = useState(false);
     const[Products, setProducts] = useState([]);
     const[cartItems, setCartItems] = useState({});
@@ -39,11 +39,15 @@ const AppContextProvider = ({ children }) => {
             const { data } = await axios.get("/api/seller/is-auth");
             if (data.success) {
                 setIsSeller(true);
+                return true;
             } else {
                 setIsSeller(false);
+                return false;
             }
         } catch (error) {
+            console.log("Seller auth check failed:", error.response?.status);
             setIsSeller(false);
+            return false;
         }
     }
 
@@ -187,16 +191,31 @@ const AppContextProvider = ({ children }) => {
 
     useEffect(()=>{
         fetchProducts();
-        checkSellerAuth();
         checkUserAuth();
     },[]);
+
+    // seller logout function
+    const sellerLogout = async () => {
+        try {
+            const { data } = await axios.get("/api/seller/logout");
+            setIsSeller(false);
+            navigate("/");
+            toast.success("Logged out successfully!");
+        } catch (error) {
+            console.error("Logout error:", error);
+            // Force logout even if API call fails
+            setIsSeller(false);
+            navigate("/");
+            toast.success("Logged out successfully!");
+        }
+    }
 
     // Fetch addresses and orders when user changes
     useEffect(() => {
         fetchUserAddresses();
         fetchUserOrders();
     }, [user]);
-    const value = {navigate,user,setuser,isSeller,setIsSeller,showUserLogin,setShowUserLogin,Products,cartItems,setCartItems,addToCart,updateCartItem,cartCount,totalCartAmount,removeFromCart,searchQuery, setSearchQuery,axios,fetchProducts,checkUserAuth,userAddresses,fetchUserAddresses,userOrders,fetchUserOrders,};
+    const value = {navigate,user,setuser,isSeller,setIsSeller,showUserLogin,setShowUserLogin,Products,cartItems,setCartItems,addToCart,updateCartItem,cartCount,totalCartAmount,removeFromCart,searchQuery, setSearchQuery,axios,fetchProducts,checkUserAuth,checkSellerAuth,userAddresses,fetchUserAddresses,userOrders,fetchUserOrders,sellerLogout,};
     return <AppContext.Provider value={value}>{children}</AppContext.Provider>
 }
 
