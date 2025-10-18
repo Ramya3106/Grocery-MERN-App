@@ -1,21 +1,12 @@
 import toast from "react-hot-toast";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { AppContext } from "../../context/AppContext";
-import axios from "axios";
-
-// Configure axios for the backend
-axios.defaults.baseURL = "http://localhost:5000";
-axios.defaults.withCredentials = true;
 
 const SellerLogin = () => {
-  const { isSeller, setIsSeller, navigate } = useContext(AppContext);
+  const { isSeller, setIsSeller, navigate, axios } = useContext(AppContext);
   const [email, setEmail] = useState("admin@gmail.com"); // Default email
   const [password, setPassword] = useState("admin123"); // Default password
-  useEffect(() => {
-    if (isSeller) {
-      navigate("/seller");
-    }
-  }, [isSeller]);
+  
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -33,6 +24,7 @@ const SellerLogin = () => {
       if (data.success) {
         setIsSeller(true);
         toast.success("Login successful!");
+        // Navigate to seller dashboard after successful login
         navigate("/seller");
       } else {
         toast.error(data.message || "Login failed");
@@ -52,8 +44,7 @@ const SellerLogin = () => {
     }
   };
   return (
-    !isSeller && (
-      <div className="fixed top-0 left-0 bottom-0 right-0 z-30 flex items-center justify-center  bg-black/50 text-gray-600">
+    <div className="fixed top-0 left-0 bottom-0 right-0 z-30 flex items-center justify-center  bg-black/50 text-gray-600">
         <form
           onSubmit={handleSubmit}
           className="flex flex-col gap-4 m-auto items-start p-8 py-12 w-80 sm:w-[352px] rounded-lg shadow-xl border border-gray-200 bg-white"
@@ -96,7 +87,6 @@ const SellerLogin = () => {
           </button>
         </form>
       </div>
-    )
   );
 };
 export default SellerLogin;
