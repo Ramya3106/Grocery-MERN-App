@@ -64,7 +64,7 @@ export const getUserOrders = async (req, res) => {
   }
 };
 
-// get all orders for admin :/api/order/all
+// get all orders for admin :/api/order/seller
 export const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find({
@@ -72,8 +72,22 @@ export const getAllOrders = async (req, res) => {
     })
       .populate("items.product address")
       .sort({ createdAt: -1 });
-    res.status(200).json({ success: true, orders });
+    
+    // Convert image filenames to full URLs for each product in orders
+    const ordersWithImages = orders.map(order => ({
+      ...order.toObject(),
+      items: order.items.map(item => ({
+        ...item.toObject(),
+        product: {
+          ...item.product.toObject(),
+          image: item.product.image.map(filename => `${req.protocol}://${req.get('host')}/images/${filename}`)
+        }
+      }))
+    }));
+    
+    res.status(200).json({ success: true, orders: ordersWithImages });
   } catch (error) {
+    console.error("Error in getAllOrders:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
